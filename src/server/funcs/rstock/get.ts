@@ -1,4 +1,4 @@
-import { RollingStock } from "@prisma/client";
+import { RStock } from "@prisma/client";
 import { Context } from "../../router/context";
 import * as trpc from '@trpc/server';
 
@@ -6,19 +6,24 @@ import * as trpc from '@trpc/server';
    * Gets data about a single rolling stock matching the identifier provided
    * @param ctx Context for db
    * @param identifier The identifier of the rolling e.g. 350101
-   * @returns The rolling stock data as type RollingStock
+   * @returns The rolling stock data as type RStock
    */
 
-export default async function rstockGet(ctx: Context, identifier: string): Promise<RollingStock> {
+export default async function rstockGet(ctx: Context, identifier: string): Promise<RStock> {
     try {
         // Try and find the train in the db
-        let rstock: RollingStock = await ctx.prisma.rollingStock.findUniqueOrThrow({
+        let rstock: RStock = await ctx.prisma.rStock.findUniqueOrThrow({
             where: { identifier: identifier },
             include: { 
-                operator: true, 
-                class: {
+                opSet: {
                     include: {
-                        manufacturer: true
+                        operator: true,
+                        class: {
+                            include: {
+                                manufacturer: true
+                            }
+                        },
+                        illustrations: true
                     }
                 }
             }
@@ -29,7 +34,7 @@ export default async function rstockGet(ctx: Context, identifier: string): Promi
         // Assume if gone wrong, train wasn't found
         throw new trpc.TRPCError({
             code: 'NOT_FOUND',
-            message: `Rolling stock with the identifier ${identifier} could not be found`,
+            message: `Stock with the identifier ${identifier} could not be found`,
             cause: identifier
         });
     };

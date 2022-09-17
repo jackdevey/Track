@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "mysql"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.text annotations in model Account below
     // Further reading: 
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -18,81 +18,92 @@ model Example {
     id String @id @default(cuid())
 }
 
-// RollingStock table
-model RollingStock {
-    // Ids 
+model RStock {
     id          String @id @default(cuid())
+    // rstock number
     identifier  String @unique
-
+    // rstock attributes
     livery      String
-
     builtYear   String
     depot       String
-
-    // Class relationship
-    classId String
-    class Class @relation(fields: [classId], references: [id])
-
-    // Formation stuff
     formation   String
     carCount    Int
-
+    // sightings
     sightings   Sighting[]
- 
-    // Operator relationship
-    operator    OperatingCompany @relation(fields: [operatorId], references: [id])
-    operatorId  String
+    // operator set
+    opSet       OperatorSet  @relation(fields: [opSetId], references: [id])
+    opSetId     String
 }
 
-// Operating Company table
-model OperatingCompany {
+model Illustration {
     id          String @id @default(cuid())
+    // illustration attributes
+    url         String
+    license     String
+    author      String
+    source      String
+    // operator set
+    opSet       OperatorSet @relation(fields: [opSetId], references: [id])
+    opSetId     String
+}
+
+model Operator {
+    id          String @id @default(cuid())
+    // operator attributes
     name        String 
     code        String @unique
     logoUrl     String
-    rStock      RollingStock[]
+    // operator sets
     operatorSets OperatorSet[]
 }
 
 // Sighting table
 model Sighting {
     id          String @id @default(cuid())
+    // sighting attributes
     location    String
     date        DateTime
-    rstock      RollingStock @relation(fields: [rstockId], references: [id])
+    // rstock
+    rstock      RStock @relation(fields: [rstockId], references: [id])
     rstockId    String
+    // user
     userId      String
 }
 
 model Class {
     id          String @id @default(cuid())
+    // class attributes
     no          String @unique
     type        String
     model       String
-
+    // Manufacturer
     manufacturer Manufacturer @relation(fields: [manufacturerId], references: [id])
     manufacturerId String
-
+    // operator sets
     operatorSets OperatorSet[]
-    rollingStock RollingStock[]
 }
 
 model Manufacturer {
     id         String @id @default(cuid())
+    // manufacturer attributes
     name       String
     logoUrl    String
-    wikiPedia  String
-
+    // classes
     classes    Class[]
 }
 
 model OperatorSet {
     id         String @id @default(cuid())
-    graphicUrl String
-    operator   OperatingCompany @relation(fields: [operatorId], references: [id])
+    // operator
+    operator   Operator @relation(fields: [operatorId], references: [id])
     operatorId String 
+    // class
     class      Class @relation(fields: [classId], references: [id])
     classId    String
+    // illustrations
+    illustrations Illustration[]
+    // rstock
+    rstock         RStock[]
 }
 
 // Necessary for Next auth

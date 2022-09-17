@@ -37,23 +37,15 @@ const Home: NextPage = () => {
                                 <Title order={4}>350101</Title>
                                 <Text>Monday 3rd September</Text>
                             </div>
-                            <Anchor>View</Anchor>
+                            <Anchor href={"/rs/350101"}>View</Anchor>
                         </div>
                         <Divider mt={10} mb={10}/>
                         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                             <div>
-                                <Title order={4}>350102</Title>
+                                <Title order={4}>170101</Title>
                                 <Text>Tuesday 4th September</Text>
                             </div>
-                            <Anchor>View</Anchor>
-                        </div>
-                        <Divider mt={10} mb={10}/>
-                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                            <div>
-                                <Title order={4}>350103</Title>
-                                <Text>Wednesday 5th September</Text>
-                            </div>
-                            <Anchor>View</Anchor>
+                            <Anchor href={"/rs/170101"}>View</Anchor>
                         </div>
                     </Card>
                     <Grid gutter="md">
