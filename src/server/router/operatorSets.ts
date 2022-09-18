@@ -7,9 +7,10 @@ export const operatorSetRouter = createRouter()
     .query("get", {
         input: z
             .object({
+                opCode: z.string(),
                 classNo: z.string(),
             }),
         async resolve({ ctx, input }) { 
-            return await operatorSetsGet(ctx, input.classNo); 
+            return await operatorSetsGet(ctx, input.opCode, input.classNo); 
         },
     })

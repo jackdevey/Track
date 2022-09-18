@@ -7,10 +7,10 @@ export const operatingCompanyRouter = createRouter()
     .query("get", {
         input: z
             .object({
-                code: z.string(),
+                code: z.string()
             }),
         async resolve({ ctx, input }) { 
-            return await operatingCompanyGet(ctx, input.code); 
+            return await operatingCompanyGet(ctx, input.code);
         },
     })
 

@@ -9,12 +9,29 @@ import * as trpc from '@trpc/server';
    * @returns The rolling stock data as type OperatingCompany
    */
 
-export default async function operatingCompanyGet(ctx: Context, code: string): Promise<Operator> {
+export default async function operatingCompanyGet(ctx: Context, code: string, withRstock: boolean = false) {
     try {
         // Try and find the company in the db
-        let oc: Operator = await ctx.prisma.operator.findUniqueOrThrow({
+        let oc = await ctx.prisma.operator.findUniqueOrThrow({
             where: { code: code },
-            include: { operatorSets: { include: { class: true, operator: true } } }
+            include: { 
+                operatorSets: { 
+                    include: { 
+                        class: { 
+                            include: { 
+                                manufacturer: true 
+                            } 
+                        }, 
+                        operator: true,
+                        rstock: withRstock,
+                        _count: {
+                            select: {
+                                rstock: true
+                            }
+                        }
+                    }
+                }
+            }
         });
         // Return the company
         return oc;

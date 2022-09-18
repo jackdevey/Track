@@ -1,22 +1,22 @@
 import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, Image, Skeleton, Alert, Avatar } from "@mantine/core";
-import { Class, Manufacturer } from "@prisma/client";
+import { Illustration, OperatorSet } from "@prisma/client";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital, InfoCircle } from "tabler-icons-react";
-import { ClassThumbnail, OperatorSetThumbnail } from "../../components/classList/operatorCard";
-import { HeaderMiddle } from "../../components/headerMiddle";
-import { trpc } from "../../utils/trpc";
+import { OperatorSetThumbnail } from "../../../../components/classList/operatorCard";
+import { HeaderMiddle } from "../../../../components/headerMiddle";
+import { trpc } from "../../../../utils/trpc";
 
 export default function RstockPage() {
 
     // Get code from router
     const router = useRouter();
-    const { id } = router.query;
+    const { code, classNo } = router.query;
 
     const { data, isLoading } = trpc.useQuery([
-        "mf.get",
-        { id: id as string },
+        "operatorSet.get",
+        { opCode: code as string, classNo: classNo as string },
     ]);
 
     const { classes } = useStyles();
@@ -25,13 +25,13 @@ export default function RstockPage() {
 
     return (
         <>
-            <Head><title>{data.name}</title></Head>
+            <Head><title>{data.operator.name}</title></Head>
             <HeaderMiddle/>
             <Box className={classes.header}>
                 <Container>
                     <div className={classes.headerText}>
-                        <Title>{data.name}</Title>
-                        <Text>Manufacturer</Text>
+                        <Title>{data.operator.shortName}'s class {classNo}s</Title>
+                        <Text>Operator Set</Text>
                     </div>
                 </Container>
             </Box>
@@ -41,30 +41,41 @@ export default function RstockPage() {
                         <Stack>
                             <Card withBorder>
                                 <div className={classes.titleRow}>
-                                    <Text><b>Headquaters</b></Text>
-                                    <Text>Derby, England</Text>
+                                    <Text><b>Operator</b></Text>
+                                    <Anchor href={"/oc/" + data.operator.code}>{data.operator.name}</Anchor>
                                 </div>
                                 <Divider my={10}/>
                                 <div className={classes.titleRow}>
-                                    <Text><b>Products</b></Text>
-                                    <Text>{data.classes.length}</Text>
+                                    <Text><b>Manufacturer</b></Text>
+                                    <Anchor href={"/mf/" + data.class.manufacturer.id}>{data.class.manufacturer.name}</Anchor>
+                                </div>
+                                <Divider my={10}/>
+                                <div className={classes.titleRow}>
+                                    <Text><b>Count</b></Text>
+                                    <Text>{data.rstock.length}</Text>
                                 </div>
                             </Card>
-                            <Text><b>Products</b></Text>
+                            <Title order={4}>Rolling Stock</Title>
                             <Card withBorder>
-                                {data.classes.map((classObj: Class, i: number) => (
+                                {data.rstock.map((rstock, i) => (
                                     <>
-                                        <ClassThumbnail classObj={classObj} manufacturer={data}/>
-                                        {data.classes.length - 1 != i && <Divider my={10}/>}
+                                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                                            <div>
+                                                <Title order={4}>{rstock.identifier}</Title>
+                                                <Text mt={-5}>{rstock.formation}</Text>
+                                            </div>
+                                            <Anchor href={"/rs/170101"}>View</Anchor>
+                                        </div>
+                                        {i != data.rstock.length - 1 && <Divider my={10}/>}
                                     </>
-                                ))}                     
+                                ))}          
                             </Card>
                         </Stack>
                     </Grid.Col>
                     <Grid.Col md={3}>
                         <Card withBorder>
                         <Card.Section>
-                            <Image src={data.logoUrl}/>
+                            <Image src={data.operator.logoUrl}/>
                         </Card.Section>
                             <Text mt={15}><b>Logo</b></Text>
                         </Card>

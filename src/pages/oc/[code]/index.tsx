@@ -1,11 +1,12 @@
 import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, Image, Skeleton, Alert, Avatar } from "@mantine/core";
 import { Illustration, OperatorSet } from "@prisma/client";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital, InfoCircle } from "tabler-icons-react";
-import { OperatorSetThumbnail } from "../../components/classList/operatorCard";
-import { HeaderMiddle } from "../../components/headerMiddle";
-import { trpc } from "../../utils/trpc";
+import { OperatorSetThumbnail } from "../../../components/classList/operatorCard";
+import { HeaderMiddle } from "../../../components/headerMiddle";
+import { trpc } from "../../../utils/trpc";
 
 export default function RstockPage() {
 
@@ -24,6 +25,7 @@ export default function RstockPage() {
 
     return (
         <>
+            <Head><title>{data.name}</title></Head>
             <HeaderMiddle/>
             <Box className={classes.header}>
                 <Container>
@@ -59,7 +61,7 @@ export default function RstockPage() {
                                     <Text>{data.callStatCount}</Text>
                                 </div>
                             </Card>
-                            <Text><b>Rolling Stock</b></Text>
+                            <Title order={4}>Rolling Stock</Title>
                             <Card withBorder>
                                 {data.operatorSets.map((operatorSet: OperatorSet, i: number) => (
                                     <>

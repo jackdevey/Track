@@ -1,13 +1,13 @@
-import { OperatingCompany, OperatorSet } from "@prisma/client";
+import { OperatorSet } from "@prisma/client";
 import { Context } from "../../router/context";
 import * as trpc from '@trpc/server';
 
-export default async function operatorSetsGet(ctx: Context, classNo: string): Promise<OperatorSet[]> {
+export default async function operatorSetsGet(ctx: Context, opCode: string, classNo: string) {
     try {
         // Try and find the operator sets in the db
-        let os: OperatorSet[] = await ctx.prisma.operatorSet.findMany({
-            include: { operator: true },
-            where: { class: { no: classNo } }
+        let os = await ctx.prisma.operatorSet.findFirstOrThrow({
+            include: { operator: true, rstock: true, class: { include: { manufacturer: true }} },
+            where: { class: { no: classNo }, operator: { code: opCode } }
         });
         // Return the operator set
         return os;

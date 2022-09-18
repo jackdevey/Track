@@ -50,7 +50,8 @@ model Illustration {
 model Operator {
     id            String @id @default(cuid())
     // operator attributes
-    name          String 
+    name          String
+    shortName     String?
     code          String @unique
     logoUrl       String 
     callStatCount String?
