@@ -1,9 +1,9 @@
 import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, Image, Skeleton, Alert, Avatar } from "@mantine/core";
-import { Illustration, OperatorSet } from "@prisma/client";
+import { Class, Manufacturer } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital, InfoCircle } from "tabler-icons-react";
-import { OperatorSetThumbnail } from "../../components/classList/operatorCard";
+import { ClassThumbnail, OperatorSetThumbnail } from "../../components/classList/operatorCard";
 import { HeaderMiddle } from "../../components/headerMiddle";
 import { trpc } from "../../utils/trpc";
 
@@ -11,11 +11,11 @@ export default function RstockPage() {
 
     // Get code from router
     const router = useRouter();
-    const { code } = router.query;
+    const { id } = router.query;
 
     const { data, isLoading } = trpc.useQuery([
-        "operatingCompany.get",
-        { code: code as string },
+        "mf.get",
+        { id: id as string },
     ]);
 
     const { classes } = useStyles();
@@ -29,7 +29,7 @@ export default function RstockPage() {
                 <Container>
                     <div className={classes.headerText}>
                         <Title>{data.name}</Title>
-                        <Text>Operating Company</Text>
+                        <Text>Manufacturer</Text>
                     </div>
                 </Container>
             </Box>
@@ -37,34 +37,23 @@ export default function RstockPage() {
                 <Grid>
                     <Grid.Col md={9}>
                         <Stack>
-                            {(data.code == "lml" || data.code == "lmw") && <Alert icon={<InfoCircle/>}>{data.name} is a trading name for West Midlands Trains, who operate <Anchor href="/oc/lmw">West Midlands Railway</Anchor> &amp; <Anchor href="/oc/lml">London Northwestern Railway</Anchor></Alert>}
                             <Card withBorder>
                                 <div className={classes.titleRow}>
-                                    <Text><b>Franchise</b></Text>
-                                    <Text>{data.franchise}</Text>
+                                    <Text><b>Headquaters</b></Text>
+                                    <Text>Derby, England</Text>
                                 </div>
                                 <Divider my={10}/>
                                 <div className={classes.titleRow}>
-                                    <Text><b>Reporting mark</b></Text>
-                                    <Text>{data.code.substring(0, 2)}</Text>
-                                </div>
-                                <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Website</b></Text>
-                                    <Anchor href={"https://" + data.website}>{data.website}</Anchor>
-                                </div>
-                                <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Calling stations</b></Text>
-                                    <Text>{data.callStatCount}</Text>
+                                    <Text><b>Products</b></Text>
+                                    <Text>{data.classes.length}</Text>
                                 </div>
                             </Card>
-                            <Text><b>Rolling Stock</b></Text>
+                            <Text><b>Products</b></Text>
                             <Card withBorder>
-                                {data.operatorSets.map((operatorSet: OperatorSet, i: number) => (
+                                {data.classes.map((classObj: Class, i: number) => (
                                     <>
-                                        <OperatorSetThumbnail opSet={operatorSet}/>
-                                        {data.operatorSets.length - 1 != i && <Divider my={10}/>}
+                                        <ClassThumbnail classObj={classObj} manufacturer={data}/>
+                                        {data.classes.length - 1 != i && <Divider my={10}/>}
                                     </>
                                 ))}                     
                             </Card>
@@ -73,7 +62,7 @@ export default function RstockPage() {
                     <Grid.Col md={3}>
                         <Card withBorder>
                         <Card.Section>
-                            <Image src={data.logoUrl}/>
+                            <Image src="https://i.postimg.cc/3Nv9CCxH/Untitled-design-2.png"/>
                         </Card.Section>
                             <Text mt={15}><b>Logo</b></Text>
                         </Card>

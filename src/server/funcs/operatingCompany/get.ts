@@ -1,4 +1,4 @@
-import { OperatingCompany } from "@prisma/client";
+import { Operator } from "@prisma/client";
 import { Context } from "../../router/context";
 import * as trpc from '@trpc/server';
 
@@ -9,11 +9,12 @@ import * as trpc from '@trpc/server';
    * @returns The rolling stock data as type OperatingCompany
    */
 
-export default async function operatingCompanyGet(ctx: Context, code: string): Promise<OperatingCompany> {
+export default async function operatingCompanyGet(ctx: Context, code: string): Promise<Operator> {
     try {
         // Try and find the company in the db
-        let oc: OperatingCompany = await ctx.prisma.operatingCompany.findUniqueOrThrow({
-            where: { code: code }
+        let oc: Operator = await ctx.prisma.operator.findUniqueOrThrow({
+            where: { code: code },
+            include: { operatorSets: { include: { class: true, operator: true } } }
         });
         // Return the company
         return oc;

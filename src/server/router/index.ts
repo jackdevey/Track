@@ -7,6 +7,7 @@ import { sightingRouter } from "./sighting";
 import { operatingCompanyRouter } from "./operatingCompany";
 import { classesRouter } from "./classes";
 import { operatorSetRouter } from "./operatorSets";
+import { mfRouter } from "./mfRouter";
 
 export const appRouter = createRouter()
   	.transformer(superjson)
@@ -15,6 +16,7 @@ export const appRouter = createRouter()
 	.merge("operatingCompany.", operatingCompanyRouter)
 	.merge("classes.", classesRouter)
 	.merge("operatorSet.", operatorSetRouter)
+	.merge("mf.", mfRouter)
 
 // export type definition of API
 export type AppRouter = typeof appRouter;

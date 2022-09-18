@@ -75,7 +75,7 @@ export function HeaderMiddle() {
     <Header height={56}>
         <Container className={classes.inner}>
             <Link href="/">
-              <Title order={2} align="center" style={{cursor: "pointer"}}>🛤️ Track</Title>
+              <Title order={2} align="center" style={{cursor: "pointer"}}>🚅 Track</Title>
             </Link>
 
             <TextInput

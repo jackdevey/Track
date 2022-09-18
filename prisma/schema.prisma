@@ -48,13 +48,16 @@ model Illustration {
 }
 
 model Operator {
-    id          String @id @default(cuid())
+    id            String @id @default(cuid())
     // operator attributes
-    name        String 
-    code        String @unique
-    logoUrl     String
+    name          String 
+    code          String @unique
+    logoUrl       String 
+    callStatCount String?
+    website       String?
+    franchise     String
     // operator sets
-    operatorSets OperatorSet[]
+    operatorSets   OperatorSet[]
 }
 
 // Sighting table
