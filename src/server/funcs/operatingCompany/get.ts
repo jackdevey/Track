@@ -15,7 +15,12 @@ export default async function operatingCompanyGet(ctx: Context, code: string, wi
         let oc = await ctx.prisma.operator.findUniqueOrThrow({
             where: { code: code },
             include: { 
-                operatorSets: { 
+                operatorSets: {
+                    orderBy: {
+                        class: {
+                            no: 'asc',
+                        },
+                    },
                     include: { 
                         class: { 
                             include: { 

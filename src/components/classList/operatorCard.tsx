@@ -13,7 +13,7 @@ export function OperatorSetThumbnail({opSet}: { opSet: OperatorSet }) {
                                 component="a"
                                 href={"/mf/" + opSet.class.manufacturer.id}
                                 src={opSet.class.manufacturer.logoUrl}
-                                size={40}/>
+                                size={40}>{opSet.class.manufacturer.name.substring(0,2)}</Avatar>
                         </Tooltip>
                         <Tooltip label={opSet.operator.name} color="dark">
                             <Avatar 
