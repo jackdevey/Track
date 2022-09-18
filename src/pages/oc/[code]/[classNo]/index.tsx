@@ -64,7 +64,7 @@ export default function RstockPage() {
                                                 <Title order={4}>{rstock.identifier}</Title>
                                                 <Text mt={-5}>{rstock.formation}</Text>
                                             </div>
-                                            <Anchor href={"/rs/170101"}>View</Anchor>
+                                            <Anchor href={"/rs/" + rstock.identifier}>View</Anchor>
                                         </div>
                                         {i != data.rstock.length - 1 && <Divider my={10}/>}
                                     </>

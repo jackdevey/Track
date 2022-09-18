@@ -1,5 +1,6 @@
 import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title } from "@mantine/core";
 import { Illustration } from "@prisma/client";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital } from "tabler-icons-react";
@@ -24,12 +25,15 @@ export default function RstockPage() {
 
     return (
         <>
+            <Head>
+                <title>350101</title>
+            </Head>
             <HeaderMiddle/>
             <Box className={classes.header}>
                 <Container>
                     <div className={classes.headerText}>
                         <Title>{identifier}</Title>
-                        <Text>{data.opSet.operator.name}</Text>
+                        <Text>Passenger train ({data.opSet.class.type})</Text>
                     </div>
                 </Container>
             </Box>

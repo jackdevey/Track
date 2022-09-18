@@ -27,7 +27,6 @@ export default async function operatingCompanyGet(ctx: Context, code: string, wi
                                 manufacturer: true 
                             } 
                         }, 
-                        operator: true,
                         rstock: withRstock,
                         _count: {
                             select: {

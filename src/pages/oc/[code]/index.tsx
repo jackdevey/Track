@@ -65,7 +65,7 @@ export default function RstockPage() {
                             <Card withBorder>
                                 {data.operatorSets.map((operatorSet: OperatorSet, i: number) => (
                                     <>
-                                        <OperatorSetThumbnail opSet={operatorSet}/>
+                                        <OperatorSetThumbnail opSet={operatorSet} operator={data}/>
                                         {data.operatorSets.length - 1 != i && <Divider my={10}/>}
                                     </>
                                 ))}                     

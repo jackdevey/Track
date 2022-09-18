@@ -1,7 +1,7 @@
 import { Anchor, Avatar, Box, Text, Title, Tooltip } from "@mantine/core";
-import { OperatorSet, Class, Manufacturer } from "@prisma/client";
+import { OperatorSet, Class, Manufacturer, Operator } from "@prisma/client";
 
-export function OperatorSetThumbnail({opSet}: { opSet: OperatorSet }) {
+export function OperatorSetThumbnail({opSet, operator}: { opSet: OperatorSet, operator: Operator }) {
     return (
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <div style={{display: 'flex', alignItems: 'center'}}>
@@ -15,11 +15,11 @@ export function OperatorSetThumbnail({opSet}: { opSet: OperatorSet }) {
                                 src={opSet.class.manufacturer.logoUrl}
                                 size={40}>{opSet.class.manufacturer.name.substring(0,2)}</Avatar>
                         </Tooltip>
-                        <Tooltip label={opSet.operator.name} color="dark">
+                        <Tooltip label={operator.name} color="dark">
                             <Avatar 
                                 component="a"
-                                href={"/oc/" + opSet.operator.code}
-                                src={opSet.operator.logoUrl}
+                                href={"/oc/" + operator.code}
+                                src={operator.logoUrl}
                                 size={40}/>
                         </Tooltip>
                     </Avatar.Group>
@@ -30,7 +30,7 @@ export function OperatorSetThumbnail({opSet}: { opSet: OperatorSet }) {
                     <Text mt={-5}>{opSet._count.rstock} units</Text>
                 </Box>
             </div>
-            <Anchor href={"/oc/" + opSet.operator.code + "/" + opSet.class.no}>View</Anchor>
+            <Anchor href={"/oc/" + operator.code + "/" + opSet.class.no}>View</Anchor>
         </div>
     )
 }
