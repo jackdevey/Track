@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital, InfoCircle } from "tabler-icons-react";
 import { OperatorSetThumbnail } from "../../../components/classList/operatorCard";
 import { HeaderMiddle } from "../../../components/headerMiddle";
+import { MainPageLoading } from "../../../components/mainPageLoading";
 import { trpc } from "../../../utils/trpc";
 
 export default function RstockPage() {
@@ -21,7 +22,7 @@ export default function RstockPage() {
 
     const { classes } = useStyles();
 
-    if (!data) return <LoadingOverlay visible={true}></LoadingOverlay>
+    if (!data) return <MainPageLoading/>
 
     return (
         <>
@@ -39,7 +40,7 @@ export default function RstockPage() {
                 <Grid>
                     <Grid.Col md={9}>
                         <Stack>
-                            {(data.code == "lml" || data.code == "lmw") && <Alert icon={<InfoCircle/>}>{data.name} is a trading name for West Midlands Trains, who operate <Anchor href="/oc/lmw">West Midlands Railway</Anchor> &amp; <Anchor href="/oc/lml">London Northwestern Railway</Anchor></Alert>}
+                            {(data.code == "lml" || data.code == "lmw") && <Alert icon={<InfoCircle/>}>{data.name} is a trading name for West Midlands Trains, who operate <Anchor onClick={() => router.push(`/op/lmw`)}>West Midlands Railway</Anchor> &amp; <Anchor onClick={() => router.push(`/op/lml`)}>London Northwestern Railway</Anchor></Alert>}
                             <Card withBorder>
                                 <div className={classes.titleRow}>
                                     <Text><b>Franchise</b></Text>

@@ -1,7 +1,9 @@
 import { Anchor, Avatar, Box, Text, Title, Tooltip } from "@mantine/core";
 import { Class, Manufacturer } from "@prisma/client";
+import { useRouter } from "next/router";
 
 export function OperatorSetThumbnail({ opSet, operator }: { opSet: OperatorSetFull, operator: OperatorFull }) {
+    const router = useRouter();
     return (
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <div style={{display: 'flex', alignItems: 'center'}}>
@@ -11,14 +13,16 @@ export function OperatorSetThumbnail({ opSet, operator }: { opSet: OperatorSetFu
                         <Tooltip label={opSet.class.manufacturer.name} color="dark">
                             <Avatar 
                                 component="a"
-                                href={"/mf/" + opSet.class.manufacturer.id}
+                                onClick={() => router.push(`/mf/${opSet.class.manufacturer.id}`)}
+                                style={{cursor: 'pointer'}}
                                 src={opSet.class.manufacturer.logoUrl}
                                 size={40}>{opSet.class.manufacturer.name.substring(0,2)}</Avatar>
                         </Tooltip>
                         <Tooltip label={operator.name} color="dark">
                             <Avatar 
                                 component="a"
-                                href={"/oc/" + operator.code}
+                                onClick={() => router.push(`/op/${operator.code}`)}
+                                style={{cursor: 'pointer'}}
                                 src={operator.logoUrl}
                                 size={40}/>
                         </Tooltip>
@@ -30,7 +34,7 @@ export function OperatorSetThumbnail({ opSet, operator }: { opSet: OperatorSetFu
                     <Text mt={-5}>{opSet._count.rstock} units</Text>
                 </Box>
             </div>
-            <Anchor href={"/op/" + operator.code + "/" + opSet.class.no}>View</Anchor>
+            <Anchor onClick={() => router.push(`/op/${operator.code}/${opSet.class.no}`)}>View</Anchor>
         </div>
     )
 }

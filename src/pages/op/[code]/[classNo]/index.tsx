@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital, InfoCircle } from "tabler-icons-react";
 import { OperatorSetThumbnail } from "../../../../components/classList/operatorCard";
 import { HeaderMiddle } from "../../../../components/headerMiddle";
+import { MainPageLoading } from "../../../../components/mainPageLoading";
 import { trpc } from "../../../../utils/trpc";
 
 export default function RstockPage() {
@@ -21,7 +22,7 @@ export default function RstockPage() {
 
     const { classes } = useStyles();
 
-    if (!data) return <LoadingOverlay visible={true}></LoadingOverlay>
+    if (!data) return <MainPageLoading/>
 
     return (
         <>
@@ -42,12 +43,12 @@ export default function RstockPage() {
                             <Card withBorder>
                                 <div className={classes.titleRow}>
                                     <Text><b>Operator</b></Text>
-                                    <Anchor href={"/op/" + data.operator.code}>{data.operator.name}</Anchor>
+                                    <Anchor onClick={() => router.push(`/op/${data.operator.code}`)}>{data.operator.name}</Anchor>
                                 </div>
                                 <Divider my={10}/>
                                 <div className={classes.titleRow}>
                                     <Text><b>Manufacturer</b></Text>
-                                    <Anchor href={"/mf/" + data.class.manufacturer.id}>{data.class.manufacturer.name}</Anchor>
+                                    <Anchor onClick={() => router.push(`/mf/${data.class.manufacturer.id}`)}>{data.class.manufacturer.name}</Anchor>
                                 </div>
                                 <Divider my={10}/>
                                 <div className={classes.titleRow}>

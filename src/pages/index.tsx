@@ -2,6 +2,7 @@ import { Anchor, Box, Button, Card, Container, createStyles, Divider, Grid, Simp
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ArrowRight, CircleCheck } from "tabler-icons-react";
 import { HeaderMiddle } from "../components/headerMiddle";
 import { trpc } from "../utils/trpc";
@@ -13,6 +14,7 @@ const Home: NextPage = () => {
     const { classes } = useStyles();
     const theme = useMantineTheme();
     const SECONDARY_COL_HEIGHT = PRIMARY_COL_HEIGHT / 2 - theme.spacing.md / 2;
+    const router = useRouter();
 
     return (
         <>
@@ -37,7 +39,7 @@ const Home: NextPage = () => {
                                 <Title order={4}>350101</Title>
                                 <Text>Monday 3rd September</Text>
                             </div>
-                            <Anchor href={"/rs/350101"}>View</Anchor>
+                            <Anchor onClick={() => router.push("/rs/350101")}>View</Anchor>
                         </div>
                         <Divider mt={10} mb={10}/>
                         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -45,7 +47,7 @@ const Home: NextPage = () => {
                                 <Title order={4}>170101</Title>
                                 <Text>Tuesday 4th September</Text>
                             </div>
-                            <Anchor href={"/rs/170101"}>View</Anchor>
+                            <Anchor onClick={() => router.push("/rs/170101")}>View</Anchor>
                         </div>
                     </Card>
                     <Grid gutter="md">

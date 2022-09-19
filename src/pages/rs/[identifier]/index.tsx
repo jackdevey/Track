@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital } from "tabler-icons-react";
 import { HeaderMiddle } from "../../../components/headerMiddle";
+import { MainPageLoading } from "../../../components/mainPageLoading";
+import { RouterTransition } from "../../../components/routerTransition";
 import { trpc } from "../../../utils/trpc";
 
 export default function RstockPage() {
@@ -14,11 +16,11 @@ export default function RstockPage() {
     const { identifier } = router.query;
 
     // Get data about the train
-    const { data, isLoading } = trpc.useQuery(["rs.get", { identifier: "350101" }]);
+    const { data, isLoading } = trpc.useQuery(["rs.get", { identifier: identifier as string }]);
 
     const { classes } = useStyles();
 
-    if (!data) return <LoadingOverlay visible={true}></LoadingOverlay>
+    if (!data) return <MainPageLoading/>
 
     return (
         <>
@@ -51,7 +53,7 @@ export default function RstockPage() {
                                 <Divider my={10}/>
                                 <div className={classes.titleRow}>
                                     <Text><b>Operator</b></Text>
-                                    <Anchor href={"/oc/" + data.opSet.operator.code} key={data.opSet.operatorId}>
+                                    <Anchor onClick={() => router.push(`/op/${data.opSet.operator.code}`)}>
                                         {data.opSet.operator.name}
                                     </Anchor>
                                 </div>
@@ -68,7 +70,7 @@ export default function RstockPage() {
                                 <Divider my={10}/>
                                 <div className={classes.titleRow}>
                                     <Text><b>Manufacturer</b></Text>
-                                    <Anchor href={"/mf/" + data.opSet.class.manufacturerId} key={data.opSet.class.manufacturerId}>
+                                    <Anchor onClick={() => router.push(`/mf/${data.opSet.class.manufacturerId}`)}>
                                         {data.opSet.class.manufacturer.name}
                                     </Anchor>
                                 </div>
