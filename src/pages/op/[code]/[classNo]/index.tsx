@@ -42,7 +42,7 @@ export default function RstockPage() {
                             <Card withBorder>
                                 <div className={classes.titleRow}>
                                     <Text><b>Operator</b></Text>
-                                    <Anchor href={"/oc/" + data.operator.code}>{data.operator.name}</Anchor>
+                                    <Anchor href={"/op/" + data.operator.code}>{data.operator.name}</Anchor>
                                 </div>
                                 <Divider my={10}/>
                                 <div className={classes.titleRow}>

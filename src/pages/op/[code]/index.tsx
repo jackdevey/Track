@@ -16,7 +16,7 @@ export default function RstockPage() {
 
     const { data, isLoading } = trpc.useQuery([
         "op.get",
-        { code: "lml" },
+        { code: code as string },
     ]);
 
     const { classes } = useStyles();
