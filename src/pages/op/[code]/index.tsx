@@ -15,8 +15,8 @@ export default function RstockPage() {
     const { code } = router.query;
 
     const { data, isLoading } = trpc.useQuery([
-        "operatingCompany.get",
-        { code: code as string },
+        "op.get",
+        { code: "lml" },
     ]);
 
     const { classes } = useStyles();
@@ -31,7 +31,7 @@ export default function RstockPage() {
                 <Container>
                     <div className={classes.headerText}>
                         <Title>{data.name}</Title>
-                        <Text>Operating Company</Text>
+                        <Text>Operator</Text>
                     </div>
                 </Container>
             </Box>

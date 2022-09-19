@@ -17,5 +17,9 @@ export default defineNextConfig({
   swcMinify: true,
   images: {
     domains: ['upload.wikimedia.org']
-  }
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+    ignoreBuildErrors: true,
+  },
 });

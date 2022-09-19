@@ -8,7 +8,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import { RouterTransition } from "../components/routerTransition";
-import type { AppRouter } from "../server/router";
+import type { Router } from "../server/router";
 import "../styles/globals.css";
 
 const MyApp: AppType = ({
@@ -33,7 +33,7 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
-export default withTRPC<AppRouter>({
+export default withTRPC<Router>({
   config() {
     /**
      * If you want to use SSR, you need to use the server's full URL

@@ -14,10 +14,7 @@ export default function RstockPage() {
     const { identifier } = router.query;
 
     // Get data about the train
-    const { data, isLoading } = trpc.useQuery([
-        "rstock.get",
-        { identifier: identifier as string },
-    ]);
+    const { data, isLoading } = trpc.useQuery(["rs.get", { identifier: "350101" }]);
 
     const { classes } = useStyles();
 

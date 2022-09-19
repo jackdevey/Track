@@ -1,7 +1,7 @@
 import { Anchor, Avatar, Box, Text, Title, Tooltip } from "@mantine/core";
-import { OperatorSet, Class, Manufacturer, Operator } from "@prisma/client";
+import { Class, Manufacturer } from "@prisma/client";
 
-export function OperatorSetThumbnail({opSet, operator}: { opSet: OperatorSet, operator: Operator }) {
+export function OperatorSetThumbnail({ opSet, operator }: { opSet: OperatorSetFull, operator: OperatorFull }) {
     return (
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <div style={{display: 'flex', alignItems: 'center'}}>
@@ -30,7 +30,7 @@ export function OperatorSetThumbnail({opSet, operator}: { opSet: OperatorSet, op
                     <Text mt={-5}>{opSet._count.rstock} units</Text>
                 </Box>
             </div>
-            <Anchor href={"/oc/" + operator.code + "/" + opSet.class.no}>View</Anchor>
+            <Anchor href={"/op/" + operator.code + "/" + opSet.class.no}>View</Anchor>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, Image, Skeleton, Alert, Avatar } from "@mantine/core";
-import { Illustration, OperatorSet } from "@prisma/client";
+import { Illustration, OperatorSet, RStock } from "@prisma/client";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -15,7 +15,7 @@ export default function RstockPage() {
     const { code, classNo } = router.query;
 
     const { data, isLoading } = trpc.useQuery([
-        "operatorSet.get",
+        "os.get",
         { opCode: code as string, classNo: classNo as string },
     ]);
 
@@ -57,7 +57,7 @@ export default function RstockPage() {
                             </Card>
                             <Title order={4}>Rolling Stock</Title>
                             <Card withBorder>
-                                {data.rstock.map((rstock, i) => (
+                                {data.rstock.map((rstock: RStock, i: number) => (
                                     <>
                                         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                                             <div>

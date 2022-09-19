@@ -14,65 +14,67 @@ export default function RstockPage() {
     const router = useRouter();
     const { id } = router.query;
 
-    const { data, isLoading } = trpc.useQuery([
-        "mf.get",
-        { id: id as string },
-    ]);
+    return <Text>Hi</Text>
 
-    const { classes } = useStyles();
+    // const { data, isLoading } = trpc.useQuery([
+    //     "mf.get",
+    //     { id: id as string },
+    // ]);
 
-    if (!data) return <LoadingOverlay visible={true}></LoadingOverlay>
+    // const { classes } = useStyles();
 
-    return (
-        <>
-            <Head><title>{data.name}</title></Head>
-            <HeaderMiddle/>
-            <Box className={classes.header}>
-                <Container>
-                    <div className={classes.headerText}>
-                        <Title>{data.name}</Title>
-                        <Text>Manufacturer</Text>
-                    </div>
-                </Container>
-            </Box>
-            <Container my={20}>
-                <Grid>
-                    <Grid.Col md={9}>
-                        <Stack>
-                            <Card withBorder>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Headquaters</b></Text>
-                                    <Text>Derby, England</Text>
-                                </div>
-                                <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Products</b></Text>
-                                    <Text>{data.classes.length}</Text>
-                                </div>
-                            </Card>
-                            <Text><b>Products</b></Text>
-                            <Card withBorder>
-                                {data.classes.map((classObj: Class, i: number) => (
-                                    <>
-                                        <ClassThumbnail classObj={classObj} manufacturer={data}/>
-                                        {data.classes.length - 1 != i && <Divider my={10}/>}
-                                    </>
-                                ))}                     
-                            </Card>
-                        </Stack>
-                    </Grid.Col>
-                    <Grid.Col md={3}>
-                        <Card withBorder>
-                        <Card.Section>
-                            <Image src={data.logoUrl}/>
-                        </Card.Section>
-                            <Text mt={15}><b>Logo</b></Text>
-                        </Card>
-                    </Grid.Col>
-                </Grid>
-            </Container>
-        </>
-    )
+    // if (!data) return <LoadingOverlay visible={true}></LoadingOverlay>
+
+    // return (
+    //     <>
+    //         <Head><title>{data.name}</title></Head>
+    //         <HeaderMiddle/>
+    //         <Box className={classes.header}>
+    //             <Container>
+    //                 <div className={classes.headerText}>
+    //                     <Title>{data.name}</Title>
+    //                     <Text>Manufacturer</Text>
+    //                 </div>
+    //             </Container>
+    //         </Box>
+    //         <Container my={20}>
+    //             <Grid>
+    //                 <Grid.Col md={9}>
+    //                     <Stack>
+    //                         <Card withBorder>
+    //                             <div className={classes.titleRow}>
+    //                                 <Text><b>Headquaters</b></Text>
+    //                                 <Text>Derby, England</Text>
+    //                             </div>
+    //                             <Divider my={10}/>
+    //                             <div className={classes.titleRow}>
+    //                                 <Text><b>Products</b></Text>
+    //                                 <Text>{data.classes.length}</Text>
+    //                             </div>
+    //                         </Card>
+    //                         <Text><b>Products</b></Text>
+    //                         <Card withBorder>
+    //                             {data.classes.map((classObj: Class, i: number) => (
+    //                                 <>
+    //                                     <ClassThumbnail classObj={classObj} manufacturer={data}/>
+    //                                     {data.classes.length - 1 != i && <Divider my={10}/>}
+    //                                 </>
+    //                             ))}                     
+    //                         </Card>
+    //                     </Stack>
+    //                 </Grid.Col>
+    //                 <Grid.Col md={3}>
+    //                     <Card withBorder>
+    //                     <Card.Section>
+    //                         <Image src={data.logoUrl}/>
+    //                     </Card.Section>
+    //                         <Text mt={15}><b>Logo</b></Text>
+    //                     </Card>
+    //                 </Grid.Col>
+    //             </Grid>
+    //         </Container>
+    //     </>
+    // )
 }
 
 const useStyles = createStyles((theme) => ({
