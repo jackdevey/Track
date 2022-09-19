@@ -29,7 +29,7 @@ const Home: NextPage = () => {
                 </Container>
             </Box>
       
-            <Container my="md">
+            <Container my={20}>
                 <SimpleGrid cols={2} spacing="md" breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
                     <Card withBorder>
                         <Title order={3} mb={15}>Recent logs</Title>
