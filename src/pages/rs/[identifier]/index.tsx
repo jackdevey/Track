@@ -4,6 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital } from "tabler-icons-react";
+import { AttributePoint } from "../../../components/attributePoint";
 import { HeaderMiddle } from "../../../components/headerMiddle";
 import { MainPageLoading } from "../../../components/mainPageLoading";
 import { RouterTransition } from "../../../components/routerTransition";
@@ -41,44 +42,35 @@ export default function RstockPage() {
                     <Grid.Col md={8}>
                         <Stack>
                             <Card withBorder>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Formation</b></Text>
-                                    <Text>{data.formation}</Text>
-                                </div>
+                                <AttributePoint
+                                    name="Formation"
+                                    value={data.formation}/>
                                 <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Carriages</b></Text>
-                                    <Text>{data.carCount}</Text>
-                                </div>
+                                <AttributePoint
+                                    name="Carriages"
+                                    value={data.carCount}/>
                                 <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Operator</b></Text>
-                                    <Anchor onClick={() => router.push(`/op/${data.opSet.operator.code}`)}>
-                                        {data.opSet.operator.name}
-                                    </Anchor>
-                                </div>
+                                <AttributePoint
+                                    name="Operator"
+                                    value={data.opSet.operator.name}
+                                    href={`/op/${data.opSet.operator.code}`}/>
                                 <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Livery</b></Text>
-                                    <Text>{data.livery}</Text>
-                                </div>
+                                <AttributePoint
+                                    name="Livery"
+                                    value={data.livery}/>
                                 <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Depot</b></Text>
-                                    <Text>{data.depot}</Text>
-                                </div>
+                                <AttributePoint
+                                    name="Depot"
+                                    value={data.depot}/>
                                 <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Manufacturer</b></Text>
-                                    <Anchor onClick={() => router.push(`/mf/${data.opSet.class.manufacturerId}`)}>
-                                        {data.opSet.class.manufacturer.name}
-                                    </Anchor>
-                                </div>
+                                <AttributePoint
+                                    name="Manufacturer"
+                                    value={data.opSet.class.manufacturer.name}
+                                    href={`/mf/${data.opSet.class.manufacturerId}`}/>
                                 <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Built</b></Text>
-                                    <Text>{data.builtYear}</Text>
-                                </div>
+                                <AttributePoint
+                                    name="Built"
+                                    value={data.builtYear}/>
                             </Card>
                             <Card withBorder>
                                 <Text><b>Illustrations</b></Text>
@@ -129,11 +121,16 @@ const useStyles = createStyles((theme) => ({
 
     titleRow: {
         display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
     
         [theme.fn.smallerThan('sm')]: {
-          justifyContent: 'flex-start',
+            justifyContent: 'flex-start',
+            flexDirection: 'column',
+            alignItems: 'left'
+        },
+
+        [theme.fn.largerThan('sm')]: {
+            justifyContent: 'space-between',
+            alignItems: 'center'
         },
       },
 }));

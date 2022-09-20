@@ -4,6 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital, InfoCircle } from "tabler-icons-react";
+import { AttributePoint } from "../../../../components/attributePoint";
 import { OperatorSetThumbnail } from "../../../../components/classList/operatorCard";
 import { HeaderMiddle } from "../../../../components/headerMiddle";
 import { MainPageLoading } from "../../../../components/mainPageLoading";
@@ -41,20 +42,19 @@ export default function RstockPage() {
                     <Grid.Col md={9}>
                         <Stack>
                             <Card withBorder>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Operator</b></Text>
-                                    <Anchor onClick={() => router.push(`/op/${data.operator.code}`)}>{data.operator.name}</Anchor>
-                                </div>
+                                <AttributePoint
+                                    name="Operator"
+                                    value={data.operator.name}
+                                    href={`/op/${data.operator.code}`}/>
                                 <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Manufacturer</b></Text>
-                                    <Anchor onClick={() => router.push(`/mf/${data.class.manufacturer.id}`)}>{data.class.manufacturer.name}</Anchor>
-                                </div>
+                                <AttributePoint
+                                    name="Manufacturer"
+                                    value={data.class.manufacturer.name}
+                                    href={`/mf/${data.class.manufacturer.id}`}/>
                                 <Divider my={10}/>
-                                <div className={classes.titleRow}>
-                                    <Text><b>Count</b></Text>
-                                    <Text>{data.rstock.length}</Text>
-                                </div>
+                                <AttributePoint
+                                    name="Count"
+                                    value={data.rstock.length}/>
                             </Card>
                             <Title order={4}>Rolling Stock</Title>
                             <Card withBorder>
