@@ -45,7 +45,7 @@ export function ClassThumbnail({classObj, manufacturer}: { classObj: Class, manu
             <div style={{display: 'flex', alignItems: 'center'}}>
                 <Avatar 
                     src={manufacturer.logoUrl}
-                    size={40}/>
+                    size={40}>{manufacturer.name.substring(0,2)}</Avatar>
                 <Box pl={10}>
                     <Title order={4}>Class {classObj.no}</Title>
                     <Text mt={-5}>{classObj.model} ({classObj.type})</Text>

@@ -1,80 +1,86 @@
 import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, Image, Skeleton, Alert, Avatar } from "@mantine/core";
-import { Class, Manufacturer } from "@prisma/client";
+import { Class, Illustration, OperatorSet } from "@prisma/client";
+import { GetServerSideProps } from "next";
+import { User } from "next-auth";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ArrowLeft, CircuitGroundDigital, InfoCircle } from "tabler-icons-react";
+import { InfoCircle } from "tabler-icons-react";
+import { AttributePoint } from "../../components/attributePoint";
+import { AuthGuardUI } from "../../components/authGuard";
 import { ClassThumbnail, OperatorSetThumbnail } from "../../components/classList/operatorCard";
 import { HeaderMiddle } from "../../components/headerMiddle";
+import { MainPageLoading } from "../../components/mainPageLoading";
 import { trpc } from "../../utils/trpc";
 
-export default function RstockPage() {
+export default function MF({ user }: { user: User}) {
 
-    // Get code from router
+    // Get id from router
     const router = useRouter();
     const { id } = router.query;
 
-    return <Text>Hi</Text>
+    const { data, isLoading } = trpc.useQuery([
+        "mf.get",
+        { id: id as string },
+    ]);
 
-    // const { data, isLoading } = trpc.useQuery([
-    //     "mf.get",
-    //     { id: id as string },
-    // ]);
+    const { classes } = useStyles();
 
-    // const { classes } = useStyles();
+    if (!data) return <MainPageLoading user={user}/>
 
-    // if (!data) return <LoadingOverlay visible={true}></LoadingOverlay>
-
-    // return (
-    //     <>
-    //         <Head><title>{data.name}</title></Head>
-    //         <HeaderMiddle/>
-    //         <Box className={classes.header}>
-    //             <Container>
-    //                 <div className={classes.headerText}>
-    //                     <Title>{data.name}</Title>
-    //                     <Text>Manufacturer</Text>
-    //                 </div>
-    //             </Container>
-    //         </Box>
-    //         <Container my={20}>
-    //             <Grid>
-    //                 <Grid.Col md={9}>
-    //                     <Stack>
-    //                         <Card withBorder>
-    //                             <div className={classes.titleRow}>
-    //                                 <Text><b>Headquaters</b></Text>
-    //                                 <Text>Derby, England</Text>
-    //                             </div>
-    //                             <Divider my={10}/>
-    //                             <div className={classes.titleRow}>
-    //                                 <Text><b>Products</b></Text>
-    //                                 <Text>{data.classes.length}</Text>
-    //                             </div>
-    //                         </Card>
-    //                         <Text><b>Products</b></Text>
-    //                         <Card withBorder>
-    //                             {data.classes.map((classObj: Class, i: number) => (
-    //                                 <>
-    //                                     <ClassThumbnail classObj={classObj} manufacturer={data}/>
-    //                                     {data.classes.length - 1 != i && <Divider my={10}/>}
-    //                                 </>
-    //                             ))}                     
-    //                         </Card>
-    //                     </Stack>
-    //                 </Grid.Col>
-    //                 <Grid.Col md={3}>
-    //                     <Card withBorder>
-    //                     <Card.Section>
-    //                         <Image src={data.logoUrl}/>
-    //                     </Card.Section>
-    //                         <Text mt={15}><b>Logo</b></Text>
-    //                     </Card>
-    //                 </Grid.Col>
-    //             </Grid>
-    //         </Container>
-    //     </>
-    // )
+    return (
+        <>
+            <Head><title>{data.name}</title></Head>
+            <HeaderMiddle user={user}/>
+            <Box className={classes.header}>
+                <Container>
+                    <div className={classes.headerText}>
+                        <Title>{data.name}</Title>
+                        <Text>Manufacturer</Text>
+                    </div>
+                </Container>
+            </Box>
+            <Container my={20}>
+                <Grid>
+                    <Grid.Col md={9}>
+                        <Stack>
+                            <Card withBorder>          
+                                <AttributePoint
+                                    name="Website"
+                                    value={data.website}
+                                    href={"https://" + data.website}/>
+                                <Divider my={10}/>                     
+                                <AttributePoint
+                                    name="Headquarters"
+                                    value={data.headquarters}/>
+                                <Divider my={10}/>
+                                <AttributePoint
+                                    name="Products"
+                                    value={data.classes.length}/>
+                            </Card>
+                            <Title order={4}>Products</Title>
+                            <Card withBorder>
+                                {data.classes.map((cls: Class, i: number) => (
+                                    <>
+                                        <ClassThumbnail classObj={cls} manufacturer={data}/>
+                                        {data.classes.length - 1 != i && <Divider my={10}/>}
+                                    </>
+                                ))}                     
+                            </Card>
+                        </Stack>
+                    </Grid.Col>
+                    <Grid.Col md={3}>
+                        <Card withBorder>
+                        <Card.Section>
+                            <Image src={data.logoUrl}/>
+                        </Card.Section>
+                            <Text mt={15}><b>Logo</b></Text>
+                        </Card>
+                    </Grid.Col>
+                </Grid>
+            </Container>
+        </>
+    )
 }
 
 const useStyles = createStyles((theme) => ({
@@ -100,3 +106,8 @@ const useStyles = createStyles((theme) => ({
         },
       },
 }));
+
+// Use authGuard for UI
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+    return await AuthGuardUI(req, res);
+};

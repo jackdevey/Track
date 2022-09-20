@@ -92,6 +92,8 @@ model Manufacturer {
     // manufacturer attributes
     name       String
     logoUrl    String
+    headquarters String?
+    website    String?
     // classes
     classes    Class[]
 }
