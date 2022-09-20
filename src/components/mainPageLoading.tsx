@@ -1,13 +1,14 @@
 import { HeaderMiddle } from "./headerMiddle";
 import { Box, Container, Skeleton, createStyles } from "@mantine/core";
+import { User } from "next-auth";
 
 
-export function MainPageLoading() {
+export function MainPageLoading({user}: {user:User}) {
 
     const { classes } = useStyles();
 
     return <>
-        <HeaderMiddle/>
+        <HeaderMiddle user={user}/>
         <Box className={classes.header}>
             <Container>
                 <div className={classes.headerText}>

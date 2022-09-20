@@ -1,16 +1,19 @@
 import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, Image, Skeleton, Alert, Avatar } from "@mantine/core";
 import { Illustration, OperatorSet } from "@prisma/client";
+import { GetServerSideProps } from "next";
+import { User } from "next-auth";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ArrowLeft, CircuitGroundDigital, InfoCircle } from "tabler-icons-react";
 import { AttributePoint } from "../../../components/attributePoint";
+import { AuthGuardUI } from "../../../components/authGuard";
 import { OperatorSetThumbnail } from "../../../components/classList/operatorCard";
 import { HeaderMiddle } from "../../../components/headerMiddle";
 import { MainPageLoading } from "../../../components/mainPageLoading";
 import { trpc } from "../../../utils/trpc";
 
-export default function RstockPage() {
+export default function OP({ user }: { user: User}) {
 
     // Get code from router
     const router = useRouter();
@@ -23,12 +26,12 @@ export default function RstockPage() {
 
     const { classes } = useStyles();
 
-    if (!data) return <MainPageLoading/>
+    if (!data) return <MainPageLoading user={user}/>
 
     return (
         <>
             <Head><title>{data.name}</title></Head>
-            <HeaderMiddle/>
+            <HeaderMiddle user={user}/>
             <Box className={classes.header}>
                 <Container>
                     <div className={classes.headerText}>
@@ -109,3 +112,8 @@ const useStyles = createStyles((theme) => ({
         },
       },
 }));
+
+// Use authGuard for UI
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+    return await AuthGuardUI(req, res);
+};

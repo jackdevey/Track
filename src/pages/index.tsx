@@ -1,15 +1,13 @@
-import { Anchor, Box, Button, Card, Container, createStyles, Divider, Grid, SimpleGrid, Skeleton, Text, ThemeIcon, Title, useMantineTheme } from "@mantine/core";
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
+import { Anchor, Box, Card, Container, createStyles, Divider, Grid, SimpleGrid, Skeleton, Text, ThemeIcon, Title, useMantineTheme } from "@mantine/core";
+import type { GetServerSideProps } from "next";
+import { User } from "next-auth";
 import { useRouter } from "next/router";
-import { ArrowRight, CircleCheck } from "tabler-icons-react";
+import { AuthGuardUI } from "../components/authGuard";
 import { HeaderMiddle } from "../components/headerMiddle";
-import { trpc } from "../utils/trpc";
 
 const PRIMARY_COL_HEIGHT = 300;
 
-const Home: NextPage = () => {
+export default function Home({ user }: { user: User}) {
 
     const { classes } = useStyles();
     const theme = useMantineTheme();
@@ -18,12 +16,12 @@ const Home: NextPage = () => {
 
     return (
         <>
-            <HeaderMiddle/>
+            <HeaderMiddle user={user}/>
 
             <Box className={classes.header}>
                 <Container>
                     <div className={classes.headerText}>
-                        <Title>jackdevey</Title>
+                        <Title>{user.name}</Title>
                         <Text>Level 4</Text>
                     </div>
                 </Container>
@@ -73,8 +71,6 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
-
 const useStyles = createStyles((theme) => ({
   header: {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark![6] : theme.colors.gray![0],
@@ -98,3 +94,8 @@ const useStyles = createStyles((theme) => ({
       },
     },
 }));
+
+// Use authGuard for UI
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+    return await AuthGuardUI(req, res);
+};

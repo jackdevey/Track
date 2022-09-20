@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { createStyles, Header, Group, ActionIcon, Container, Burger, Title, Text, Button, Input, TextInput } from '@mantine/core';
+import { createStyles, Header, Group, ActionIcon, Container, Burger, Title, Text, Button, Input, TextInput, Menu, UnstyledButton, Avatar } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
-import { Search } from 'tabler-icons-react';
+import { ChevronDown, Logout, Search } from 'tabler-icons-react';
+import { User } from 'next-auth';
+import { signOut } from 'next-auth/react';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -62,14 +64,35 @@ const useStyles = createStyles((theme) => ({
       color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
     },
   },
+
+  user: {
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+    borderRadius: theme.radius.sm,
+    transition: 'background-color 100ms ease',
+
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+    },
+
+    [theme.fn.smallerThan('xs')]: {
+      display: 'none',
+    },
+  },
+
+  userActive: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+  },
 }));
 
 interface HeaderMiddleProps {
   links: { link: string; label: string }[];
 }
 
-export function HeaderMiddle() {
+export function HeaderMiddle({ user }: {user: User}) {
   const { classes, cx } = useStyles();
+  const [userMenuOpened, setUserMenuOpened] = useState(false);
+  console.log(user);
 
   return (
     <Header height={56}>
@@ -78,9 +101,37 @@ export function HeaderMiddle() {
               <Title order={2} align="center" style={{cursor: "pointer"}}>🚅 Track</Title>
             </Link>
 
-            <TextInput
+            {/* <TextInput
               icon={<Search size={18}/>}
-              placeholder="Search"/>
+              placeholder="Search"/> */}
+
+<Menu
+            width={260}
+            position="bottom-end"
+            transition="pop-top-right"
+            onClose={() => setUserMenuOpened(false)}
+            onOpen={() => setUserMenuOpened(true)}
+          >
+            <Menu.Target>
+              <UnstyledButton
+                className={cx(classes.user, { [classes.userActive]: userMenuOpened })}
+              >
+                <Group spacing={7}>
+                  <Avatar src={user?.image} alt={user?.name as string} radius="xl" size={20} />
+                  <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
+                    {user?.name as string}
+                  </Text>
+                  <ChevronDown size={12} />
+                </Group>
+              </UnstyledButton>
+            </Menu.Target>
+            <Menu.Dropdown>
+              
+
+              <Menu.Item icon={<Logout size={16}/>} onClick={() => signOut()}>Logout</Menu.Item>
+
+            </Menu.Dropdown>
+          </Menu>
         </Container>
     </Header>
   );
