@@ -92,7 +92,16 @@ export default function Welcome() {
                     leftIcon={<BrandGithub/>}>
                     Continue with GitHub
                 </Button>
-                
+
+                <Button
+                    onClick={() => signIn("google", { callbackUrl: "/" })}
+                    size="xl"
+                    variant="default"
+                    className={classes.control}
+                    leftIcon={<BrandGithub/>}>
+                    Continue with Google
+                </Button>
+
             </Group>
 
             <Group mt={20}>
