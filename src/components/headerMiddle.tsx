@@ -13,9 +13,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'center',
     height: 56,
 
-    [theme.fn.smallerThan('sm')]: {
-      justifyContent: 'flex-start',
-    },
+    
   },
 
   links: {
@@ -74,7 +72,9 @@ const useStyles = createStyles((theme) => ({
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     },
+  },
 
+  userName: {
     [theme.fn.smallerThan('xs')]: {
       display: 'none',
     },
@@ -118,7 +118,7 @@ export function HeaderMiddle({ user }: {user: User}) {
               >
                 <Group spacing={7}>
                   <Avatar src={user?.image} alt={user?.name as string} radius="xl" size={20} />
-                  <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
+                  <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3} className={classes.userName}>
                     {user?.name as string}
                   </Text>
                   <ChevronDown size={12} />
