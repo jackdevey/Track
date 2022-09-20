@@ -1,6 +1,6 @@
 import { Container, Card, Title, Text, Box, Anchor, ButtonProps, Button, Code } from '@mantine/core';
 import { useRouter } from 'next/router';
-import { BrandGithub } from 'tabler-icons-react';
+import { BrandGithub, BrandGoogle } from 'tabler-icons-react';
 import { HeaderMiddle } from '../components/headerMiddle';
 import { signIn } from 'next-auth/react';
 
@@ -98,7 +98,7 @@ export default function Welcome() {
                     size="xl"
                     variant="default"
                     className={classes.control}
-                    leftIcon={<BrandGithub/>}>
+                    leftIcon={<BrandGoogle/>}>
                     Continue with Google
                 </Button>
 
