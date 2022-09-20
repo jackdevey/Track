@@ -6,12 +6,12 @@ export async function AuthGuardUI(req: IncomingMessageWithCookies, res: ServerRe
     // Get session from next auth
     const session = await unstable_getServerSession(req, res, authOptions);
     const user = session?.user;
-    
+
     // If no user logged in, redirect
     if (!user) {
         return {
             redirect: {
-                destination: "/login",
+                destination: "/welcome",
                 permanent: false,
             },
         };
