@@ -68,49 +68,39 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function HeroTitle() {
+export default function Welcome() {
   const { classes } = useStyles();
 
   return (
     <div className={classes.wrapper}>
-      <Container size={700} className={classes.inner}>
-        <h1 className={classes.title}>
-            🚅 Track <Code style={{fontSize: 20}}>Alpha</Code>
-        </h1>
+        <Container size={700} className={classes.inner}>
+            <h1 className={classes.title}>
+                🚅 Track <Code style={{fontSize: 20}}>Alpha</Code>
+            </h1>
 
-        <Text className={classes.description} color="dimmed">
-            Log, share &amp; compare your train sightings
-        </Text>
+            <Text className={classes.description} color="dimmed">
+                Log, share &amp; compare your train sightings
+            </Text>
 
-        <Group className={classes.controls}>
-         
+            <Group className={classes.controls}>
+            
+                <Button
+                    onClick={() => signIn("github", { callbackUrl: "/" })}
+                    size="xl"
+                    variant="default"
+                    className={classes.control}
+                    leftIcon={<BrandGithub/>}>
+                    Continue with GitHub
+                </Button>
+                
+            </Group>
 
-          <Button
-            onClick={() => signIn("github", { callbackUrl: "/" })}
-            size="xl"
-            variant="default"
-            className={classes.control}
-            leftIcon={<BrandGithub/>}
-          >
-            Continue with GitHub
-          </Button>
-        </Group>
-        <Group mt={20}>
-        <Anchor>Privacy Policy</Anchor>
-        <Anchor>Terms &amp; Conditions</Anchor>
-        <Anchor href="https://github.com/jackdevey/track">Contribute</Anchor>
-
-        </Group>
-      </Container>
+            <Group mt={20}>
+                <Anchor>Privacy Policy</Anchor>
+                <Anchor>Terms &amp; Conditions</Anchor>
+                <Anchor href="https://github.com/jackdevey/track">Contribute</Anchor>
+            </Group>
+        </Container>
     </div>
   );
-}
-
-export default function LoginPage() {
-    // Use router
-    const router = useRouter();
-    return <>
-        {/* <HeaderMiddle/> */}
-        <HeroTitle/>
-    </>
-}
+};
