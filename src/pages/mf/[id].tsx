@@ -1,14 +1,12 @@
-import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, Image, Skeleton, Alert, Avatar } from "@mantine/core";
-import { Class, Illustration, OperatorSet } from "@prisma/client";
+import { Box, Card, Container, createStyles, Divider, Grid, Stack, Text, Title, Image } from "@mantine/core";
+import { Class } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { User } from "next-auth";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { InfoCircle } from "tabler-icons-react";
 import { AttributePoint } from "../../components/attributePoint";
 import { AuthGuardUI } from "../../components/authGuard";
-import { ClassThumbnail, OperatorSetThumbnail } from "../../components/classList/operatorCard";
+import { ClassThumbnail } from "../../components/classList/operatorCard";
 import { HeaderMiddle } from "../../components/headerMiddle";
 import { MainPageLoading } from "../../components/mainPageLoading";
 import { trpc } from "../../utils/trpc";
@@ -60,7 +58,7 @@ export default function MF({ user }: { user: User}) {
                             </Card>
                             <Title order={4}>Products</Title>
                             <Card withBorder>
-                                {data.classes.map((cls: Class, i: number) => (
+                                {data.classes.map((cls: ClassWithOperators, i: number) => (
                                     <>
                                         <ClassThumbnail classObj={cls} manufacturer={data}/>
                                         {data.classes.length - 1 != i && <Divider my={10}/>}

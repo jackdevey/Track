@@ -13,7 +13,18 @@ export async function get(ctx: Context, id: string): Promise<ManufacturerFull> {
         return await ctx.prisma.manufacturer.findUniqueOrThrow({
             where: { id: id },
             include: { 
-                classes: true
+                classes: {
+                    orderBy: {
+                        no: "asc"
+                    },
+                    include: {
+                        operatorSets: {
+                            include: {
+                                operator: true
+                            }
+                        }
+                    }
+                }
             }
         });
     } catch(e) {

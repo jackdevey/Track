@@ -24,6 +24,7 @@ export function OperatorSetThumbnail({ opSet, operator }: { opSet: OperatorSetFu
                                 onClick={() => router.push(`/op/${operator.code}`)}
                                 style={{cursor: 'pointer'}}
                                 src={operator.logoUrl}
+                                radius="xl"
                                 size={40}/>
                         </Tooltip>
                     </Avatar.Group>
@@ -39,19 +40,41 @@ export function OperatorSetThumbnail({ opSet, operator }: { opSet: OperatorSetFu
     )
 }
 
-export function ClassThumbnail({classObj, manufacturer}: { classObj: Class, manufacturer: Manufacturer }) {
+export function ClassThumbnail({classObj, manufacturer}: { classObj: ClassWithOperators, manufacturer: Manufacturer }) {
+    const router = useRouter();
     return (
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-                <Avatar 
-                    src={manufacturer.logoUrl}
-                    size={40}>{manufacturer.name.substring(0,2)}</Avatar>
-                <Box pl={10}>
-                    <Title order={4}>Class {classObj.no}</Title>
-                    <Text mt={-5}>{classObj.model} ({classObj.type})</Text>
-                </Box>
+        <>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <Avatar 
+                        src={manufacturer.logoUrl}
+                        size={40}>{manufacturer.name.substring(0,2)}</Avatar>
+                    <Box pl={10}>
+                        <Title order={4}>Class {classObj.no}</Title>
+                        <Text mt={-5}>{classObj.model} ({classObj.type})</Text>
+                    </Box>
+                </div>
+                <Anchor href={"/mf/" + manufacturer.id + "/" + classObj.no}>View</Anchor>
             </div>
-            <Anchor href={"/mf/" + manufacturer.id + "/" + classObj.no}>View</Anchor>
-        </div>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <Text mr={5} mt={6}>Used by</Text>
+                <Tooltip.Group openDelay={300} closeDelay={100}>
+                    <Avatar.Group mt={10}> 
+                        {classObj.operatorSets.map((opSet: OperatorSetFull) => (
+                            <Tooltip label={opSet.operator.name} color="dark">
+                                <Avatar 
+                                    component="a"
+                                    onClick={() => router.push(`/op/${opSet.operator.code}`)}
+                                    style={{cursor: 'pointer'}}
+                                    src={opSet.operator.logoUrl}
+                                    radius="xl"
+                                    size={30}/>
+                            </Tooltip>
+                        ))}
+                        
+                    </Avatar.Group>
+                </Tooltip.Group>
+            </div>
+        </>
     )
 }
