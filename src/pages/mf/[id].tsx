@@ -1,9 +1,10 @@
-import { Box, Card, Container, createStyles, Divider, Grid, Stack, Text, Title, Image } from "@mantine/core";
+import { Box, Card, Container, createStyles, Divider, Grid, Stack, Text, Title, Image, Alert, Anchor } from "@mantine/core";
 import { Class } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { User } from "next-auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { InfoCircle } from "tabler-icons-react";
 import { AttributePoint } from "../../components/attributePoint";
 import { AuthGuardUI } from "../../components/authGuard";
 import { ClassThumbnail } from "../../components/classList/operatorCard";
@@ -42,6 +43,7 @@ export default function MF({ user }: { user: User}) {
                 <Grid>
                     <Grid.Col md={9}>
                         <Stack>
+                            {(data.id == "cl87saqyk008970o22cgvp7sv") && <Alert icon={<InfoCircle/>}>{data.name} was acquired by <Anchor onClick={() => router.push(`/mf/cl8hqatlp0127i7o2tazarfif`)}>Alstom</Anchor> in 2021</Alert>}
                             <Card withBorder>          
                                 <AttributePoint
                                     name="Website"
