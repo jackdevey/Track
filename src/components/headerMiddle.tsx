@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { createStyles, Header, Group, ActionIcon, Container, Burger, Title, Text, Button, Input, TextInput, Menu, UnstyledButton, Avatar } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
-import { ChevronDown, Logout, Search } from 'tabler-icons-react';
+import { Book2, ChevronDown, Logout, Search, Settings, User as UserIcon } from 'tabler-icons-react';
 import { User } from 'next-auth';
 import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -93,6 +94,7 @@ export function HeaderMiddle({ user }: {user: User}) {
   const { classes, cx } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   console.log(user);
+  const router = useRouter();
 
   return (
     <Header height={56}>
@@ -126,8 +128,10 @@ export function HeaderMiddle({ user }: {user: User}) {
               </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-              
-
+              <Menu.Item icon={<Book2 size={16}/>} onClick={() => router.push("/sightings")}>Your Sightings</Menu.Item>
+              <Menu.Item icon={<UserIcon size={16}/>} onClick={() => router.push("/account")}>Your Account</Menu.Item>
+              <Menu.Item icon={<Settings size={16}/>} onClick={() => router.push("/settings")}>Settings</Menu.Item>
+              <Menu.Divider/>
               <Menu.Item icon={<Logout size={16}/>} onClick={() => signOut()}>Logout</Menu.Item>
 
             </Menu.Dropdown>

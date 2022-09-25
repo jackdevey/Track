@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
             justifyContent: 'space-between',
             alignItems: 'center'
         },
-      }
+    }
 }));
 
 interface AttributePointProps { 

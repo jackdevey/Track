@@ -46,6 +46,11 @@ export default function RS({ user }: { user: User}) {
                         <Stack>
                             <Card withBorder>
                                 <AttributePoint
+                                    name="Class"
+                                    value={data.opSet.class.no}
+                                    href={`/mf/${data.opSet.class.manufacturer.id}/${data.opSet.class.no}`}/>
+                                <Divider my={10}/>
+                                <AttributePoint
                                     name="Formation"
                                     value={data.formation}/>
                                 <Divider my={10}/>

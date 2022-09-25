@@ -12,7 +12,7 @@ export async function get(ctx: Context, identifier: string): Promise<RStockFull>
     try {
         return await ctx.prisma.rStock.findUniqueOrThrow({
             where: { identifier: identifier },
-            include: { 
+            include: {
                 opSet: {
                     include: {
                         operator: true,
