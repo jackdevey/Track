@@ -1,4 +1,4 @@
-import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title } from "@mantine/core";
+import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, TextInput } from "@mantine/core";
 import { Illustration } from "@prisma/client";
 import type { GetServerSideProps } from "next";
 import { User } from "next-auth";
@@ -105,7 +105,16 @@ export default function RS({ user }: { user: User}) {
                     </Grid.Col>
                     <Grid.Col md={4}>
                         <Card withBorder>
-                            Logging stuff here
+                            <Title order={4}>Log sighting</Title>
+                            <Box mt={10}>
+                                <TextInput
+                                    placeholder="Location"/>
+                                <TextInput
+                                    mt={5}
+                                    placeholder="Time"/>
+                                <Button
+                                    mt={10}>Save</Button>
+                            </Box>
                         </Card>
                     </Grid.Col>
                 </Grid>
