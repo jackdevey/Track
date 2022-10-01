@@ -45,7 +45,7 @@ export default function OP({ user }: { user: User}) {
                     <Grid.Col md={9}>
                         <Stack>
                             {(data.code == "lml" || data.code == "lmw") && <Alert icon={<InfoCircle/>}>{data.name} is a trading name for West Midlands Trains, who operate <Anchor onClick={() => router.push(`/op/lmw`)}>West Midlands Railway</Anchor> &amp; <Anchor onClick={() => router.push(`/op/lml`)}>London Northwestern Railway</Anchor></Alert>}
-                            <Card withBorder>                               
+                            <Card withBorder shadow="sm">                               
                                 <AttributePoint
                                     name="Franchise"
                                     value={data.franchise}/>
@@ -65,7 +65,7 @@ export default function OP({ user }: { user: User}) {
                                     value={data.callStatCount}/>
                             </Card>
                             <Title order={4}>Rolling Stock</Title>
-                            <Card withBorder>
+                            <Card withBorder shadow="sm">
                                 {data.operatorSets.map((operatorSet: OperatorSet, i: number) => (
                                     <>
                                         <OperatorSetThumbnail opSet={operatorSet} operator={data}/>
@@ -76,7 +76,7 @@ export default function OP({ user }: { user: User}) {
                         </Stack>
                     </Grid.Col>
                     <Grid.Col md={3}>
-                        <Card withBorder>
+                        <Card withBorder shadow="sm">
                         <Card.Section>
                             <Image src={data.logoUrl}/>
                         </Card.Section>

@@ -4,14 +4,14 @@ import { GetServerSideProps } from "next";
 import { User } from "next-auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { AttributePoint } from "../../../components/attributePoint";
-import { AuthGuardUI } from "../../../components/authGuard";
-import { ClassThumbnail } from "../../../components/classList/operatorCard";
-import { HeaderMiddle } from "../../../components/headerMiddle";
-import { MainPageLoading } from "../../../components/mainPageLoading";
-import { trpc } from "../../../utils/trpc";
+import { AttributePoint } from "../../components/attributePoint";
+import { AuthGuardUI } from "../../components/authGuard";
+import { ClassThumbnail } from "../../components/classList/operatorCard";
+import { HeaderMiddle } from "../../components/headerMiddle";
+import { MainPageLoading } from "../../components/mainPageLoading";
+import { trpc } from "../../utils/trpc";
 
-export default function MFCS({ user }: { user: User}) {
+export default function CS({ user }: { user: User}) {
 
     // Get id from router
     const router = useRouter();
@@ -42,30 +42,11 @@ export default function MFCS({ user }: { user: User}) {
                 <Grid>
                     <Grid.Col md={9}>
                         <Stack>
-                            <Card withBorder>
-                                <div className={classes.attributePoint}>
-                                    <Text><b>Used by</b></Text>
-                                    <Tooltip.Group openDelay={300} closeDelay={100}>
-                                        <Avatar.Group> 
-                                            {data.operatorSets.map((opSet: OperatorSetFull) => (
-                                                <Tooltip label={opSet.operator.name} color="dark">
-                                                    <Avatar 
-                                                        component="a"
-                                                        onClick={() => router.push(`/op/${opSet.operator.code}`)}
-                                                        style={{cursor: 'pointer'}}
-                                                        src={opSet.operator.logoUrl}
-                                                        radius="xl"
-                                                        size={30}/>
-                                                </Tooltip>
-                                            ))}
-                                        </Avatar.Group>
-                                    </Tooltip.Group>
-                                </div>          
-                                <Divider my={10}/>                     
+                            <Card withBorder shadow="sm">                
                                 <AttributePoint
                                     name="Manufacturer"
                                     value={data.manufacturer.name}
-                                    href={"https://" + data.manufacturer.website}/>
+                                    href={"/mf/" + data.manufacturer.id}/>
                                 <Divider my={10}/>
                                 <AttributePoint
                                     name="Units"
@@ -80,6 +61,24 @@ export default function MFCS({ user }: { user: User}) {
                                     </>
                                 ))}                     
                             </Card> */}
+                            <Card withBorder shadow="sm">
+                                <Text mb={5}><b>Used by</b></Text>
+                                <Tooltip.Group openDelay={300} closeDelay={100}>
+                                    <Avatar.Group> 
+                                        {data.operatorSets.map((opSet: OperatorSetFull) => (
+                                            <Tooltip label={opSet.operator.name} color="dark">
+                                                <Avatar 
+                                                    component="a"
+                                                    onClick={() => router.push(`/op/${opSet.operator.code}`)}
+                                                    style={{cursor: 'pointer'}}
+                                                    src={opSet.operator.logoUrl}
+                                                    radius="xl"
+                                                    size="md"/>
+                                            </Tooltip>
+                                        ))}
+                                    </Avatar.Group>
+                                </Tooltip.Group>
+                            </Card>
                         </Stack>
                     </Grid.Col>
                     <Grid.Col md={3}>

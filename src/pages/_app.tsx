@@ -1,6 +1,7 @@
 // src/pages/_app.tsx
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
+import { NotificationsProvider } from "@mantine/notifications";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { withTRPC } from "@trpc/next";
@@ -17,11 +18,13 @@ const MyApp: AppType = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme: 'dark' }}>
-        <ModalsProvider>
-          <RouterTransition />
-          <Component {...pageProps} />
-        </ModalsProvider>
+      <MantineProvider withGlobalStyles withNormalizeCSS>
+        <NotificationsProvider autoClose={2000}>
+          <ModalsProvider>
+            <RouterTransition />
+            <Component {...pageProps} />
+          </ModalsProvider>
+        </NotificationsProvider>
       </MantineProvider>
     </SessionProvider>
   );

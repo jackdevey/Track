@@ -44,7 +44,12 @@ export default function OS({ user }: { user: User}) {
                 <Grid>
                     <Grid.Col md={9}>
                         <Stack>
-                            <Card withBorder>
+                            <Card withBorder shadow="sm">
+                                <AttributePoint
+                                    name="Class"
+                                    value={classNo as string}
+                                    href={`/cs/${classNo}`}/>
+                                <Divider my={10}/>
                                 <AttributePoint
                                     name="Operator"
                                     value={data.operator.name}
@@ -60,7 +65,7 @@ export default function OS({ user }: { user: User}) {
                                     value={data.rstock.length}/>
                             </Card>
                             <Title order={4}>Rolling Stock</Title>
-                            <Card withBorder>
+                            <Card withBorder shadow="sm">
                                 {data.rstock.map((rstock: RStock, i: number) => (
                                     <>
                                         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -77,10 +82,10 @@ export default function OS({ user }: { user: User}) {
                         </Stack>
                     </Grid.Col>
                     <Grid.Col md={3}>
-                        <Card withBorder>
-                        <Card.Section>
-                            <Image src={data.operator.logoUrl}/>
-                        </Card.Section>
+                        <Card withBorder shadow="sm">
+                            <Card.Section>
+                                <Image src={data.operator.logoUrl}/>
+                            </Card.Section>
                             <Text mt={15}><b>Logo</b></Text>
                         </Card>
                     </Grid.Col>

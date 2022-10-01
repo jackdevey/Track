@@ -42,7 +42,7 @@ export default function MF({ user }: { user: User}) {
                 <Grid>
                     <Grid.Col md={9}>
                         <Stack>
-                            <Card withBorder>          
+                            <Card withBorder shadow="sm">          
                                 <AttributePoint
                                     name="Website"
                                     value={data.website}
@@ -57,7 +57,7 @@ export default function MF({ user }: { user: User}) {
                                     value={data.classes.length}/>
                             </Card>
                             <Title order={4}>Products</Title>
-                            <Card withBorder>
+                            <Card withBorder shadow="sm">
                                 {data.classes.map((cls: ClassWithOperators, i: number) => (
                                     <>
                                         <ClassThumbnail classObj={cls} manufacturer={data}/>
@@ -68,10 +68,10 @@ export default function MF({ user }: { user: User}) {
                         </Stack>
                     </Grid.Col>
                     <Grid.Col md={3}>
-                        <Card withBorder>
-                        <Card.Section>
-                            <Image src={data.logoUrl}/>
-                        </Card.Section>
+                        <Card withBorder shadow="sm">
+                            <Card.Section>
+                                <Image src={data.logoUrl}/>
+                            </Card.Section>
                             <Text mt={15}><b>Logo</b></Text>
                         </Card>
                     </Grid.Col>

@@ -54,26 +54,7 @@ export function ClassThumbnail({classObj, manufacturer}: { classObj: ClassWithOp
                         <Text mt={-5}>{classObj.model} ({classObj.type})</Text>
                     </Box>
                 </div>
-                <Anchor href={"/mf/" + manufacturer.id + "/" + classObj.no}>View</Anchor>
-            </div>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-                <Text mr={5} mt={6}>Used by</Text>
-                <Tooltip.Group openDelay={300} closeDelay={100}>
-                    <Avatar.Group mt={10}> 
-                        {classObj.operatorSets.map((opSet: OperatorSetFull) => (
-                            <Tooltip label={opSet.operator.name} color="dark">
-                                <Avatar 
-                                    component="a"
-                                    onClick={() => router.push(`/op/${opSet.operator.code}`)}
-                                    style={{cursor: 'pointer'}}
-                                    src={opSet.operator.logoUrl}
-                                    radius="xl"
-                                    size={30}/>
-                            </Tooltip>
-                        ))}
-                        
-                    </Avatar.Group>
-                </Tooltip.Group>
+                <Anchor href={"/cs/" + classObj.no}>View</Anchor>
             </div>
         </>
     )

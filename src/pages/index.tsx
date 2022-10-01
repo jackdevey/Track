@@ -29,7 +29,7 @@ export default function Home({ user }: { user: User}) {
       
             <Container my={20}>
                 <SimpleGrid cols={2} spacing="md" breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
-                    <Card withBorder>
+                    <Card withBorder shadow="sm">
                         <Title order={3} mb={15}>Recent logs</Title>
 
                         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -50,7 +50,7 @@ export default function Home({ user }: { user: User}) {
                     </Card>
                     <Grid gutter="md">
                         <Grid.Col>
-                            <Card withBorder>
+                            <Card withBorder shadow="sm">
                                 hi
                             </Card>
                         </Grid.Col>

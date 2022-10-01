@@ -5,13 +5,17 @@ import { User } from "next-auth";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ArrowLeft, CircuitGroundDigital } from "tabler-icons-react";
+import { ArrowLeft, Calendar, Check, CircuitGroundDigital, Clock, Location, Pin } from "tabler-icons-react";
 import { AttributePoint } from "../../../components/attributePoint";
 import { AuthGuardUI } from "../../../components/authGuard";
 import { HeaderMiddle } from "../../../components/headerMiddle";
 import { MainPageLoading } from "../../../components/mainPageLoading";
 import { RouterTransition } from "../../../components/routerTransition";
 import { trpc } from "../../../utils/trpc";
+import { showNotification } from "@mantine/notifications";
+import { AutocompleteLoading } from "../../../components/locationAutocomplete";
+import { TimeInput, DatePicker } from "@mantine/dates";
+import { useForm } from "@mantine/form";
 
 export default function RS({ user }: { user: User}) {
 
@@ -44,11 +48,11 @@ export default function RS({ user }: { user: User}) {
                 <Grid>
                     <Grid.Col md={8}>
                         <Stack>
-                            <Card withBorder>
+                            <Card withBorder shadow="sm">
                                 <AttributePoint
                                     name="Class"
                                     value={data.opSet.class.no}
-                                    href={`/mf/${data.opSet.class.manufacturer.id}/${data.opSet.class.no}`}/>
+                                    href={`/cs/${data.opSet.class.no}`}/>
                                 <Divider my={10}/>
                                 <AttributePoint
                                     name="Formation"
@@ -80,7 +84,7 @@ export default function RS({ user }: { user: User}) {
                                     name="Built"
                                     value={data.builtYear}/>
                             </Card>
-                            <Card withBorder>
+                            <Card withBorder shadow="sm">
                                 <Text><b>Illustrations</b></Text>
                                 {data.opSet.illustrations.map((illustration: Illustration, i: number) => (
                                     <>
@@ -104,16 +108,17 @@ export default function RS({ user }: { user: User}) {
                         </Stack>
                     </Grid.Col>
                     <Grid.Col md={4}>
-                        <Card withBorder>
+                        <Card withBorder shadow="sm">
                             <Title order={4}>Log sighting</Title>
                             <Box mt={10}>
-                                <TextInput
-                                    placeholder="Location"/>
-                                <TextInput
-                                    mt={5}
-                                    placeholder="Time"/>
-                                <Button
-                                    mt={10}>Save</Button>
+                            <LogSightingForm
+                                onSubmit={(values: LogSightingValues) => 
+                                    showNotification({
+                                        title: 'Sighting logged',
+                                        message: `Your sighting of ${identifier} at ${values.location} has been saved`,
+                                        icon: <Check/>
+                                    })
+                                }/>
                             </Box>
                         </Card>
                     </Grid.Col>
@@ -121,6 +126,54 @@ export default function RS({ user }: { user: User}) {
             </Container>
         </>
     )
+}
+
+function LogSightingForm({ onSubmit }: LogSightingFormProps) {
+    const form = useForm({
+        initialValues: {
+            location: '',
+            time: new Date(),
+            date: new Date(),
+        },
+        validate: {
+            location: (value: string) => value ? null : 'No location provided'
+        }
+    });
+
+    return <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+        <TextInput
+            label="Location"
+            icon={<Location size={16}/>}
+            placeholder="Birmingham New St"
+            {...form.getInputProps('location')}/>
+        <DatePicker
+            mt={5}
+            label="Date"
+            icon={<Calendar size={16}/>}
+            clearable={false}
+            dropdownType="modal"
+            {...form.getInputProps('date')}/>
+        <TimeInput
+            mt={5}
+            label="Time"
+            icon={<Clock size={16}/>}
+            {...form.getInputProps('time')}/>
+        <Button
+            mt={10}
+            type="submit">
+            Save
+        </Button>
+    </form>
+}
+
+type LogSightingFormProps = {
+    onSubmit: (values: LogSightingValues) => void
+}
+
+type LogSightingValues = {
+    location: string, 
+    date: Date,
+    time: Date
 }
 
 const useStyles = createStyles((theme) => ({
