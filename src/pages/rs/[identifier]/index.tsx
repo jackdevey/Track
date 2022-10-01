@@ -13,7 +13,6 @@ import { MainPageLoading } from "../../../components/mainPageLoading";
 import { RouterTransition } from "../../../components/routerTransition";
 import { trpc } from "../../../utils/trpc";
 import { showNotification } from "@mantine/notifications";
-import { AutocompleteLoading } from "../../../components/locationAutocomplete";
 import { TimeInput, DatePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 
