@@ -94,6 +94,7 @@ model Manufacturer {
     logoUrl    String
     headquarters String?
     website    String?
+    status     String?
     // classes
     classes    Class[]
 }

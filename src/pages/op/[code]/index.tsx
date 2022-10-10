@@ -1,4 +1,4 @@
-import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, Image, Skeleton, Alert, Avatar } from "@mantine/core";
+import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, Image, Skeleton, Alert, Avatar, Code } from "@mantine/core";
 import { Illustration, OperatorSet } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { User } from "next-auth";
@@ -34,15 +34,18 @@ export default function OP({ user }: { user: User}) {
             <HeaderMiddle user={user}/>
             <Box className={classes.header}>
                 <Container>
-                    <div className={classes.headerText}>
-                        <Title>{data.name}</Title>
-                        <Text>Operator</Text>
+                    <div style={{display: "flex"}} className={classes.headerText}>
+                        <Avatar src={data.logoUrl} mr={20} size={"xl"} radius={50}>{data.name}</Avatar>
+                        <div style={{marginTop: "5px"}}>
+                            <Title>{data.name}</Title>
+                            <Text>Operator</Text>
+                        </div>
                     </div>
                 </Container>
             </Box>
             <Container my={20}>
                 <Grid>
-                    <Grid.Col md={9}>
+                    <Grid.Col md={7}>
                         <Stack>
                             {(data.code == "lml" || data.code == "lmw") && <Alert icon={<InfoCircle/>}>{data.name} is a trading name for West Midlands Trains, who operate <Anchor onClick={() => router.push(`/op/lmw`)}>West Midlands Railway</Anchor> &amp; <Anchor onClick={() => router.push(`/op/lml`)}>London Northwestern Railway</Anchor></Alert>}
                             <Card withBorder shadow="sm">                               
@@ -52,35 +55,27 @@ export default function OP({ user }: { user: User}) {
                                 <Divider my={10}/>
                                 <AttributePoint
                                     name="Reporting mark"
-                                    value={data.code.substring(0,2)}/>
+                                    value={<Code>{data.code.substring(0,2)}</Code>}/>
                                 <Divider my={10}/>
                                 <AttributePoint
                                     name="Website"
                                     value={data.website}
                                     href={"https://" + data.website}/>
-                                
                                 <Divider my={10}/>
                                 <AttributePoint
                                     name="Calling stations"
                                     value={data.callStatCount}/>
                             </Card>
-                            <Title order={4}>Rolling Stock</Title>
-                            <Card withBorder shadow="sm">
-                                {data.operatorSets.map((operatorSet: OperatorSet, i: number) => (
-                                    <>
-                                        <OperatorSetThumbnail opSet={operatorSet} operator={data}/>
-                                        {data.operatorSets.length - 1 != i && <Divider my={10}/>}
-                                    </>
-                                ))}                     
-                            </Card>
                         </Stack>
                     </Grid.Col>
-                    <Grid.Col md={3}>
+                    <Grid.Col md={5}>
                         <Card withBorder shadow="sm">
-                        <Card.Section>
-                            <Image src={data.logoUrl}/>
-                        </Card.Section>
-                            <Text mt={15}><b>Logo</b></Text>
+                            {data.operatorSets.map((operatorSet: OperatorSet, i: number) => (
+                                <>
+                                    <OperatorSetThumbnail opSet={operatorSet} operator={data}/>
+                                    {data.operatorSets.length - 1 != i && <Divider my={10}/>}
+                                </>
+                            ))}                     
                         </Card>
                     </Grid.Col>
                 </Grid>

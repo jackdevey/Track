@@ -131,8 +131,7 @@ function LogSightingForm({ onSubmit }: LogSightingFormProps) {
     const form = useForm({
         initialValues: {
             location: '',
-            time: new Date(),
-            date: new Date(),
+            date: new Date()
         },
         validate: {
             location: (value: string) => value ? null : 'No location provided'
@@ -152,11 +151,6 @@ function LogSightingForm({ onSubmit }: LogSightingFormProps) {
             clearable={false}
             dropdownType="modal"
             {...form.getInputProps('date')}/>
-        <TimeInput
-            mt={5}
-            label="Time"
-            icon={<Clock size={16}/>}
-            {...form.getInputProps('time')}/>
         <Button
             mt={10}
             type="submit">

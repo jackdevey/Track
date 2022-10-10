@@ -1,4 +1,4 @@
-import { Box, Card, Container, createStyles, Divider, Grid, Stack, Text, Title, Image } from "@mantine/core";
+import { Box, Card, Container, createStyles, Divider, Grid, Stack, Text, Title, Image, Avatar } from "@mantine/core";
 import { Class } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { User } from "next-auth";
@@ -32,17 +32,24 @@ export default function MF({ user }: { user: User}) {
             <HeaderMiddle user={user}/>
             <Box className={classes.header}>
                 <Container>
-                    <div className={classes.headerText}>
-                        <Title>{data.name}</Title>
-                        <Text>Manufacturer</Text>
+                    <div style={{display: "flex"}} className={classes.headerText}>
+                        <Avatar src={data.logoUrl} mr={20} size={"xl"}>{data.name}</Avatar>
+                        <div style={{marginTop: "5px"}}>
+                            <Title>{data.name}</Title>
+                            <Text>Manufacturer</Text>
+                        </div>
                     </div>
                 </Container>
             </Box>
             <Container my={20}>
                 <Grid>
-                    <Grid.Col md={9}>
+                    <Grid.Col md={7}>
                         <Stack>
-                            <Card withBorder shadow="sm">          
+                            <Card withBorder shadow="sm">
+                                <AttributePoint
+                                    name="Status"
+                                    value={data.status}/>
+                                <Divider my={10}/>                             
                                 <AttributePoint
                                     name="Website"
                                     value={data.website}
@@ -56,23 +63,16 @@ export default function MF({ user }: { user: User}) {
                                     name="Products"
                                     value={data.classes.length}/>
                             </Card>
-                            <Title order={4}>Products</Title>
-                            <Card withBorder shadow="sm">
-                                {data.classes.map((cls: ClassWithOperators, i: number) => (
-                                    <>
-                                        <ClassThumbnail classObj={cls} manufacturer={data}/>
-                                        {data.classes.length - 1 != i && <Divider my={10}/>}
-                                    </>
-                                ))}                     
-                            </Card>
                         </Stack>
                     </Grid.Col>
-                    <Grid.Col md={3}>
+                    <Grid.Col md={5}>
                         <Card withBorder shadow="sm">
-                            <Card.Section>
-                                <Image src={data.logoUrl}/>
-                            </Card.Section>
-                            <Text mt={15}><b>Logo</b></Text>
+                            {data.classes.map((cls: ClassWithOperators, i: number) => (
+                                <>
+                                    <ClassThumbnail classObj={cls} manufacturer={data}/>
+                                    {data.classes.length - 1 != i && <Divider my={10}/>}
+                                </>
+                            ))}                     
                         </Card>
                     </Grid.Col>
                 </Grid>

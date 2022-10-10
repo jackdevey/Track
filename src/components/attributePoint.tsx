@@ -37,6 +37,6 @@ const useStyles = createStyles((theme) => ({
 
 interface AttributePointProps { 
     name: string, 
-    value: string,
+    value: any,
     href?: string
 }
