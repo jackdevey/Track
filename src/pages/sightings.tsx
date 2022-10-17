@@ -1,10 +1,12 @@
-import { Anchor, Box, Card, Container, createStyles, Divider, Grid, SimpleGrid, Skeleton, Text, ThemeIcon, Title, useMantineTheme } from "@mantine/core";
+import { Anchor, Box, Card, Code, Container, createStyles, Divider, Grid, SimpleGrid, Skeleton, Text, ThemeIcon, Title, useMantineTheme } from "@mantine/core";
 import type { GetServerSideProps } from "next";
 import { User } from "next-auth";
 import { useRouter } from "next/router";
+import { Clock, Location } from "tabler-icons-react";
 import { AuthGuardUI } from "../components/authGuard";
 import { HeaderMiddle } from "../components/headerMiddle";
 import { MainPageLoading, SubPageLoading } from "../components/mainPageLoading";
+import SightingBlock from "../components/sightingCard";
 import { trpc } from "../utils/trpc";
 
 const PRIMARY_COL_HEIGHT = 300;
@@ -18,7 +20,6 @@ export default function Home({ user }: { user: User}) {
 
     // Get the list of sightings
     const { data, isLoading } = trpc.useQuery(["si.getAll"]);
-
     if (!data) return <SubPageLoading user={user}/>
 
     return (
@@ -37,12 +38,9 @@ export default function Home({ user }: { user: User}) {
                 <Grid columns={12}>
                     <Grid.Col span={8}>
                         <Card withBorder shadow="sm">
-                            {data.map((sighting: SightingFull, i: number) => (
+                            {data.map((sighting: SightingForList, i: number) => (
                                 <>
-                                    <Text>{sighting.location}</Text>
-                                    <Text>{sighting.id}</Text>
-                                    <Text>{sighting.date.toString()}</Text>
-                                    <Text>{sighting.rstock.identifier}</Text>
+                                    <SightingBlock sighting={sighting}/>
                                     {i != data.length - 1 && <Divider my={10}/>}
                                 </>
                             ))}

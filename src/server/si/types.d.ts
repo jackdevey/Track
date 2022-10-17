@@ -1,13 +1,16 @@
 /**
- * Full sighting type
+ * Sighting type when in a list
  * as returned by the API
  */
 
-type SightingFull = Sighting & {
-    rstock: RStock & {
-        opSet: OperatorSet & {
-            operator: Operator;
-            class: Class;
-        };
-    };
+type SightingForList = Sighting & {
+    rStockSightings: RStockSightingWithRstock[];
+}
+
+/**
+ * As returned by api
+ */
+
+type RStockSightingWithRstock = RstockSighting & {
+    rstock: RStock;
 }

@@ -29,7 +29,7 @@ model RStock {
     formation   String
     carCount    Int
     // sightings
-    sightings   Sighting[]
+    sightings   RstockSighting[]
     // operator set
     opSet       OperatorSet  @relation(fields: [opSetId], references: [id])
     opSetId     String
@@ -64,14 +64,25 @@ model Operator {
 // Sighting table
 model Sighting {
     id          String @id @default(cuid())
+    // user
+    userId      String
+
     // sighting attributes
     location    String
     date        DateTime
+
     // rstock
-    rstock      RStock @relation(fields: [rstockId], references: [id])
-    rstockId    String
-    // user
-    userId      String
+    rStockSightings RstockSighting[]
+}
+
+model RstockSighting {
+    id String @id @default(cuid())
+    // sighting
+    sighting Sighting @relation(fields: [sightingId], references: [id])
+    sightingId String
+    // rstock
+    rstock RStock @relation(fields: [rstockId], references: [id])
+    rstockId String
 }
 
 model Class {
