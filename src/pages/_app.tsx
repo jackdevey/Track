@@ -8,6 +8,7 @@ import { withTRPC } from "@trpc/next";
 import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
+import { FooterLinks } from "../components/footer";
 import { RouterTransition } from "../components/routerTransition";
 import type { Router } from "../server/router";
 import "../styles/globals.css";
@@ -23,6 +24,7 @@ const MyApp: AppType = ({
           <ModalsProvider>
             <RouterTransition />
             <Component {...pageProps} />
+            {/* <FooterLinks/> */}
           </ModalsProvider>
         </NotificationsProvider>
       </MantineProvider>

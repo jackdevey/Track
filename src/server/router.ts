@@ -5,6 +5,7 @@ import { router as mfRouter } from "./mf/router";
 import { router as opRouter } from "./op/router";
 import { router as osRouter } from "./os/router";
 import { router as rsRouter } from "./rs/router";
+import { router as siRouter } from "./si/router";
 
 export const router = createRouter()
     .transformer(superjson)
@@ -13,5 +14,6 @@ export const router = createRouter()
     .merge("op.", opRouter)
     .merge("os.", osRouter)
     .merge("rs.", rsRouter)
+    .merge("si.", siRouter);
 
 export type Router = typeof router;

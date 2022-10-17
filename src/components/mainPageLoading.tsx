@@ -20,6 +20,23 @@ export function MainPageLoading({user}: {user:User}) {
     </>
 }
 
+export function SubPageLoading({user}: {user:User}) {
+
+    const { classes } = useStyles();
+
+    return <>
+        <HeaderMiddle user={user}/>
+        <Box className={classes.header}>
+            <Container>
+                <div className={classes.headerText}>
+                    <Skeleton height={40} width="30%" />
+                </div>
+            </Container>
+        </Box>
+    </>
+}
+
+
 const useStyles = createStyles((theme) => ({
     header: {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark![6] : theme.colors.gray![0],

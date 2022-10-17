@@ -4,6 +4,8 @@ import { User } from "next-auth";
 import { useRouter } from "next/router";
 import { AuthGuardUI } from "../components/authGuard";
 import { HeaderMiddle } from "../components/headerMiddle";
+import { MainPageLoading, SubPageLoading } from "../components/mainPageLoading";
+import { trpc } from "../utils/trpc";
 
 const PRIMARY_COL_HEIGHT = 300;
 
@@ -13,6 +15,11 @@ export default function Home({ user }: { user: User}) {
     const theme = useMantineTheme();
     const SECONDARY_COL_HEIGHT = PRIMARY_COL_HEIGHT / 2 - theme.spacing.md / 2;
     const router = useRouter();
+
+    // Get the list of sightings
+    const { data, isLoading } = trpc.useQuery(["si.getAll"]);
+
+    if (!data) return <SubPageLoading user={user}/>
 
     return (
         <>
@@ -30,7 +37,15 @@ export default function Home({ user }: { user: User}) {
                 <Grid columns={12}>
                     <Grid.Col span={8}>
                         <Card withBorder shadow="sm">
-                            a
+                            {data.map((sighting: SightingFull, i: number) => (
+                                <>
+                                    <Text>{sighting.location}</Text>
+                                    <Text>{sighting.id}</Text>
+                                    <Text>{sighting.date.toString()}</Text>
+                                    <Text>{sighting.rstock.identifier}</Text>
+                                    {i != data.length - 1 && <Divider my={10}/>}
+                                </>
+                            ))}
                         </Card>
                     </Grid.Col>
                     <Grid.Col span={4}>

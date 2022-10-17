@@ -14,4 +14,16 @@ export namespace Errors {
         });
     }
 
+    /**
+     * Throw a 401 error code
+     * for trpc
+     */
+
+     export function throw401() {
+        throw new trpc.TRPCError({
+            code: 'UNAUTHORIZED',
+            message: `You must be logged in to use this resource`
+        });
+    }
+
 }
