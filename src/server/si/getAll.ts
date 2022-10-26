@@ -9,7 +9,7 @@ import { Errors } from "../errors";
  * @returns SightingFull
  */
 
-export async function getAll(ctx: Context, user: User, rStockId: string, limit: number): Promise<SightingForList[]> {
+export async function getAll(ctx: Context, user: User, rStockId: string|null|undefined, limit: number): Promise<SightingForList[]> {
     return await ctx.prisma.sighting.findMany({
         where: { 
             userId: user.id,
