@@ -5,7 +5,6 @@ import { User } from "next-auth";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ArrowLeft, CircuitGroundDigital, InfoCircle } from "tabler-icons-react";
 import { AttributePoint } from "../../../../components/attributePoint";
 import { AuthGuardUI } from "../../../../components/authGuard";
 import { OperatorSetThumbnail } from "../../../../components/classList/operatorCard";

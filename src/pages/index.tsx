@@ -18,7 +18,7 @@ export default function Home({ user }: { user: User}) {
     const router = useRouter();
 
     // Get the list of sightings
-    const { data: sightings, isLoading: _ } = trpc.useQuery(["si.getAll"]);
+    const { data: sightings, isLoading: _ } = trpc.useQuery(["si.getAll", { take: 2}]);
     if (!sightings) return <MainPageLoading user={user}/>
 
     return (
@@ -40,10 +40,11 @@ export default function Home({ user }: { user: User}) {
                         <Title order={3} mb={15}>Recent logs</Title>
                         {sightings.map((sighting: SightingForList, i: number) => (
                             <>
-                                <SightingBlock sighting={sighting}/>
-                                {i != sightings.length - 1 && <Divider my={10}/>}
+                                <SightingBlock sighting={sighting} hasChips={true}/>
+                                <Divider my={10}/>
                             </>
                         ))}
+                        <Anchor onClick={() => router.push("/sightings")} my={10}>See all</Anchor>
                     </Card>
                     <Grid gutter="md">
                         <Grid.Col>

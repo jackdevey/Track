@@ -19,7 +19,7 @@ export default function Home({ user }: { user: User}) {
     const router = useRouter();
 
     // Get the list of sightings
-    const { data, isLoading } = trpc.useQuery(["si.getAll"]);
+    const { data, isLoading } = trpc.useQuery(["si.getAll", { take: 10}]);
     if (!data) return <SubPageLoading user={user}/>
 
     return (
@@ -40,7 +40,7 @@ export default function Home({ user }: { user: User}) {
                         <Card withBorder shadow="sm">
                             {data.map((sighting: SightingForList, i: number) => (
                                 <>
-                                    <SightingBlock sighting={sighting}/>
+                                    <SightingBlock sighting={sighting} hasChips={true}/>
                                     {i != data.length - 1 && <Divider my={10}/>}
                                 </>
                             ))}

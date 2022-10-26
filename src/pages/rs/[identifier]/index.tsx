@@ -1,4 +1,4 @@
-import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, TextInput } from "@mantine/core";
+import { Anchor, Tooltip, BackgroundImage, Box, Breadcrumbs, Button, Card, Container, createStyles, Divider, Grid, LoadingOverlay, Space, Stack, Text, Title, TextInput, ColorSwatch, Group, Checkbox, Code, Badge } from "@mantine/core";
 import { Illustration } from "@prisma/client";
 import type { GetServerSideProps } from "next";
 import { User } from "next-auth";
@@ -15,6 +15,9 @@ import { trpc } from "../../../utils/trpc";
 import { showNotification } from "@mantine/notifications";
 import { TimeInput, DatePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
+import showErrorPopup from "../../../components/errorPopup";
+import InlineTicketsCount from "../../../components/tickets/inlineTicketsCount";
+import SightingBlock from "../../../components/sightingCard";
 
 export default function RS({ user }: { user: User}) {
 
@@ -24,10 +27,42 @@ export default function RS({ user }: { user: User}) {
 
     // Get data about the train
     const { data, isLoading } = trpc.useQuery(["rs.get", { identifier: identifier as string }]);
+    const id = data?.id
+
+    // Get data about the train sightings
+    const { data: sightings, isLoading: _ } = trpc.useQuery(["si.getAll", { rStockId: id as string, take: 2 }], { enabled: !!id});
+
+    // Get sighting log information
+    const createSighting = trpc.useMutation(['si.create']);
+
+    // When log sighting is pressed
+    const logSighting = (values: LogSightingValues) => {
+        // Call api 
+        createSighting.mutate({
+            rStockIds: [(data.id)],
+            location: values.location,
+            date: values.date
+        })
+        if (createSighting.isError) {
+            showNotification({
+                title: 'ded',
+                color: "red",
+                message: createSighting.error.message
+            });
+
+            return;
+        }
+        // Show notification for confirmation
+        showNotification({
+            title: 'Sighting logged',
+            message: `Your sighting of ${identifier} at ${values.location} has been saved`,
+            icon: <Check/>
+        })
+    }
 
     const { classes } = useStyles();
 
-    if (!data) return <MainPageLoading user={user}/>
+    if (!data || !sightings) return <MainPageLoading user={user}/>
 
     return (
         <>
@@ -107,19 +142,35 @@ export default function RS({ user }: { user: User}) {
                         </Stack>
                     </Grid.Col>
                     <Grid.Col md={4}>
-                        <Card withBorder shadow="sm">
-                            <Title order={4}>Log sighting</Title>
-                            <Box mt={10}>
-                            <LogSightingForm
-                                onSubmit={(values: LogSightingValues) => 
-                                    showNotification({
-                                        title: 'Sighting logged',
-                                        message: `Your sighting of ${identifier} at ${values.location} has been saved`,
-                                        icon: <Check/>
-                                    })
-                                }/>
-                            </Box>
-                        </Card>
+                        <Stack>
+                            <Card withBorder shadow="sm">
+                                <div style={{display: 'flex'}}>
+                                    <Checkbox checked={true} mr={10}/>
+                                    <Title order={4} mr={10}>Seen 4 times</Title>
+                                    <InlineTicketsCount count={10}/>
+                                </div>
+                                <Text></Text>
+                            </Card>
+                            <Card withBorder shadow="sm">
+                                <Title order={4} mb={15}>Previous sightings</Title>
+                                {sightings.map((sighting: SightingForList, i: number) => (
+                                    <>
+                                        <SightingBlock sighting={sighting} hasChips={false}/>
+                                        <Divider my={10}/>
+                                    </>
+                                ))}
+                                <Anchor href="/sightings">+ 2 more</Anchor>
+                            </Card>
+                            <Card withBorder shadow="sm">
+                                <Title order={4}>Log sighting</Title>
+                                <Box mt={10}>
+                                <LogSightingForm
+                                    onSubmit={(values: LogSightingValues) => 
+                                        logSighting(values)
+                                    }/>
+                                </Box>
+                            </Card>
+                        </Stack>
                     </Grid.Col>
                 </Grid>
             </Container>
@@ -138,7 +189,7 @@ function LogSightingForm({ onSubmit }: LogSightingFormProps) {
         }
     });
 
-    return <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+    return <form onSubmit={form.onSubmit((values: LogSightingValues) => onSubmit(values))}>
         <TextInput
             label="Location"
             icon={<Location size={16}/>}
@@ -165,8 +216,7 @@ type LogSightingFormProps = {
 
 type LogSightingValues = {
     location: string, 
-    date: Date,
-    time: Date
+    date: Date
 }
 
 const useStyles = createStyles((theme) => ({

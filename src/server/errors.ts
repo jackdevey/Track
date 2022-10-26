@@ -26,4 +26,16 @@ export namespace Errors {
         });
     }
 
+    /**
+     * Throw a 400 error code
+     * for trpc
+     */
+
+     export function throw400(overide: string|null = null) {
+        throw new trpc.TRPCError({
+            code: 'BAD_REQUEST',
+            message: overide || `Check the inputs supplied to this function`
+        });
+    }
+
 }

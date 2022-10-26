@@ -1,12 +1,11 @@
-import { Box, Card, Container, createStyles, Divider, Grid, Stack, Text, Title, Image, Tooltip, Avatar } from "@mantine/core";
-import { Class } from "@prisma/client";
+import { Box, Card, Container, createStyles, Divider, Grid, Stack, Text, Title, Image, Tooltip, Avatar, Anchor, Checkbox } from "@mantine/core";
+import { Class, RStock } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { User } from "next-auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { AttributePoint } from "../../components/attributePoint";
 import { AuthGuardUI } from "../../components/authGuard";
-import { ClassThumbnail } from "../../components/classList/operatorCard";
 import { HeaderMiddle } from "../../components/headerMiddle";
 import { MainPageLoading } from "../../components/mainPageLoading";
 import { trpc } from "../../utils/trpc";
@@ -40,7 +39,7 @@ export default function CS({ user }: { user: User}) {
             </Box>
             <Container my={20}>
                 <Grid>
-                    <Grid.Col md={9}>
+                    <Grid.Col md={8}>
                         <Stack>
                             <Card withBorder shadow="sm">                
                                 <AttributePoint
@@ -62,6 +61,30 @@ export default function CS({ user }: { user: User}) {
                                 ))}                     
                             </Card> */}
                             <Card withBorder shadow="sm">
+                                {data.operatorSets.map((opSet: OperatorSetFull, i: number) => (
+                                    <div>
+                                        {opSet.rstock.map((rStock: RStockPartial, j: number) => (
+                                            <>
+                                                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                                                    <div style={{display: 'flex', alignItems: 'center'}}>
+                                                        <Checkbox mr={10} size="md"/>
+                                                        <div>
+                                                            <Text><b>{rStock.identifier}</b></Text>
+                                                            <Text>{rStock.formation}</Text>
+                                                        </div>
+                                                    </div>
+                                                    <Anchor onClick={() => router.push("/rs/" + rStock.identifier)}>View</Anchor>
+                                                </div>
+                                                {!(i == data.operatorSets.length - 1 && j == opSet.rstock.length - 1) && <Divider my={10}/>}
+                                            </>
+                                        ))}
+                                    </div>
+                                ))}
+                            </Card>
+                        </Stack>
+                    </Grid.Col>
+                    <Grid.Col md={4}>
+                    <Card withBorder shadow="sm">
                                 <Text mb={5}><b>Used by</b></Text>
                                 <Tooltip.Group openDelay={300} closeDelay={100}>
                                     <Avatar.Group> 
@@ -79,15 +102,6 @@ export default function CS({ user }: { user: User}) {
                                     </Avatar.Group>
                                 </Tooltip.Group>
                             </Card>
-                        </Stack>
-                    </Grid.Col>
-                    <Grid.Col md={3}>
-                        <Card withBorder>
-                        <Card.Section>
-                            <Image src={"a"}/>
-                        </Card.Section>
-                            <Text mt={15}><b>Logo</b></Text>
-                        </Card>
                     </Grid.Col>
                 </Grid>
             </Container>

@@ -16,7 +16,16 @@ export async function get(ctx: Context, classNo: string): Promise<ClassWithOpera
                 manufacturer: true,
                 operatorSets: {
                     include: {
-                        operator: true
+                        operator: true,
+                        rstock: {
+                            include: {
+                                opSet: {
+                                    include: {
+                                        operator: true
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

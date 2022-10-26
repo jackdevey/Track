@@ -83,6 +83,11 @@ model RstockSighting {
     // rstock
     rstock RStock @relation(fields: [rstockId], references: [id])
     rstockId String
+    // userFirst
+    userFirst Boolean @default(false)
+    // Make sightings and rstocks unique so that it crashes
+    // on trying to do duplicates
+    @@unique([sightingId, rstockId])
 }
 
 model Class {

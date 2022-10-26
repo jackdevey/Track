@@ -12,3 +12,9 @@ type RStockFull = RStock & {
         };
     };
 }
+
+type RStockPartial = RStock & {
+    opSet: OperatorSet & {
+        operator: Operator;
+    };
+}
