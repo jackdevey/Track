@@ -1,4 +1,4 @@
-import { Anchor, createStyles, Text } from "@mantine/core";
+import { Anchor, createStyles, Text, Code } from "@mantine/core";
 import { useRouter } from "next/router";
 
 export function AttributePoint({ name, value, href }: AttributePointProps) {
@@ -13,7 +13,7 @@ export function AttributePoint({ name, value, href }: AttributePointProps) {
     return <>
         <div className={classes.attributePoint}>
             <Text><b>{name}</b></Text>
-            {valueElement}
+            {((value == "" || value == null) && <Code>Unknown ?</Code>) || valueElement}
         </div>
     </>
 }
