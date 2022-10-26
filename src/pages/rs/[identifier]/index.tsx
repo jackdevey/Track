@@ -90,7 +90,11 @@ export default function RS({ user }: { user: User}) {
                                 <Divider my={10}/>
                                 <AttributePoint
                                     name="Formation"
-                                    value={data.formation}/>
+                                    value={
+                                        // Cut off formation if too many cars
+                                        ((data.carCount >= 6) && <CompactFormation formation={data.formation}/>) ||
+                                        ((data.carCount < 6) && data.formation)
+                                    }/>
                                 <Divider my={10}/>
                                 <AttributePoint
                                     name="Carriages"
@@ -176,6 +180,15 @@ export default function RS({ user }: { user: User}) {
             </Container>
         </>
     )
+}
+
+function CompactFormation({ formation }: { formation: string}) {
+    const formationList = formation.split(" ");
+    return (
+        <Tooltip label={formation}>
+            <Text>{formationList[0]} {formationList[1]} <Code>...</Code> {formationList[formationList.length - 2]} {formationList[formationList.length - 1]}</Text>
+        </Tooltip>
+    );
 }
 
 function LogSightingForm({ onSubmit }: LogSightingFormProps) {
