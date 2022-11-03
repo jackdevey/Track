@@ -132,10 +132,12 @@ export default function RS({ user }: { user: User}) {
                                             offset={-10}
                                             withArrow>
                                                 <Anchor href={illustration.source}>
-                                                    <img 
-                                                        src={illustration.url}
-                                                        height="30px"
-                                                        style={{marginTop: 10}}/>
+                                                    <div style={{display: "flex", flexWrap: "nowrap", overflowX: "auto"}}>
+                                                        <img 
+                                                            src={illustration.url}
+                                                            height="30px"
+                                                            style={{marginTop: 10, overflowY: "scroll", flex: "0 0 auto"}}/>
+                                                    </div>
                                                 </Anchor>
                                         </Tooltip>
                                         {i != data.opSet.illustrations.length - 1 && <Divider my={10}/>}
