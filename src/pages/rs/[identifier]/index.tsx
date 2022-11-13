@@ -71,14 +71,14 @@ export default function RS({ user }: { user: User}) {
             </Head>
             <HeaderMiddle user={user}/>
             <Box className={classes.header}>
-                <Container>
+                <Container size={"xl"}>
                     <div className={classes.headerText}>
                         <Title>{identifier}</Title>
                         <Text>Passenger train ({data.opSet.class.type})</Text>
                     </div>
                 </Container>
             </Box>
-            <Container my={20}>
+            <Container my={20} size={"lg"}>
                 <Grid>
                     <Grid.Col md={8}>
                         <Stack>

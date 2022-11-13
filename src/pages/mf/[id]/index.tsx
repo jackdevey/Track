@@ -31,7 +31,7 @@ export default function MF({ user }: { user: User}) {
             <Head><title>{data.name}</title></Head>
             <HeaderMiddle user={user}/>
             <Box className={classes.header}>
-                <Container>
+                <Container size={"xl"}>
                     <div style={{display: "flex"}} className={classes.headerText}>
                         <Avatar src={data.logoUrl} mr={20} size={"xl"}>{data.name}</Avatar>
                         <div style={{marginTop: "5px"}}>
@@ -41,7 +41,7 @@ export default function MF({ user }: { user: User}) {
                     </div>
                 </Container>
             </Box>
-            <Container my={20}>
+            <Container my={20} size={"lg"}>
                 <Grid>
                     <Grid.Col md={7}>
                         <Stack>

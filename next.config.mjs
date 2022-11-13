@@ -22,4 +22,7 @@ export default defineNextConfig({
     ignoreDuringBuilds: true,
     ignoreBuildErrors: true,
   },
+  experimental: {
+    appDir: true
+  }
 });

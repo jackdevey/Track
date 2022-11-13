@@ -90,7 +90,7 @@ interface HeaderMiddleProps {
   links: { link: string; label: string }[];
 }
 
-export function HeaderMiddle({ user }: {user: User}) {
+export function HeaderMiddle({ user }: {user: User|null}) {
   const { classes, cx } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   console.log(user);
@@ -98,7 +98,7 @@ export function HeaderMiddle({ user }: {user: User}) {
 
   return (
     <Header height={56}>
-        <Container className={classes.inner}>
+        <Container className={classes.inner} size="xl">
             <Link href="/">
               <Title order={2} align="center" style={{cursor: "pointer"}}>🚅 Track</Title>
             </Link>
