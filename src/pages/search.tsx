@@ -1,56 +1,51 @@
-import { Button } from "@mantine/core";
+import { Avatar, Button, Loader, Text, TextInput } from "@mantine/core";
+import { useDebouncedState, useDebouncedValue } from "@mantine/hooks";
+import { ModalsProvider, openModal } from "@mantine/modals";
 import { SpotlightProvider, openSpotlight, useSpotlight, SpotlightAction } from "@mantine/spotlight";
-import { useState } from "react";
+import { Operator } from "@prisma/client";
+import { useEffect, useState } from "react";
 import { Building, Dashboard, File, Home, Search, Train } from "tabler-icons-react";
+import { trpc } from "../utils/trpc";
 
 export default function SearchPage() {
 
+    const search = trpc.useMutation(["op.search"]);
 
-    const actions: SpotlightAction[] = [
-        {
-        title: '350101',
-        group: 'rolling stock',
-        description: '54566 6644 45666 45664 46544',
-        onTrigger: () => console.log('Home')
-        },
-        {
-          title: 'Class 350',
-          group: 'Class',
-          description: '87 units, London Northwestern Railway',
-          onTrigger: () => console.log('Home')
-        },
-        {
-          title: 'Class 139',
-          group: 'Class',
-          description: '2 units, West Midlands Railway',
-          onTrigger: () => console.log('Home')
-        },
-        {
-          title: 'London Northwestern Railway',
-          description: '123 units, London & Midlands',
-          group: 'operator',
-          onTrigger: () => console.log('Dashboard'),
-          icon: <Building size={18} />,
-        }
-      
-      ];
+    const [value, setValue] = useState('');
+    const [term] = useDebouncedValue(value, 100);
 
+
+	let results = false;
+
+    useEffect(() => {
+      if (term.length >= 2) {
+        search.mutate({term});
+      }
+    }, [term]);
+    
     return(
-        <SpotlightProvider
-      actions={actions}
-      searchIcon={<Search size={18} />}
-      searchPlaceholder="Search..."
-      shortcut="mod + shift + C"
-    >
-            <Spot></Spot>
-        </SpotlightProvider>
+		<>
+			<TextInput defaultValue={value} placeholder="West Midlands Railway" data-autofocus onChange={(event) => setValue(event.currentTarget.value)} />
+				{search.isSuccess && search.data.map((d) => 
+					<OperatorSearchResult data={d} />
+				)}
+				
+
+				{search.isLoading && <Loader/>}
+		</>
+
     )
 }
 
-function Spot() {
-    const [registered, setRegistered] = useState(false);
-    const spotlight = useSpotlight();
-    return (
-        <Button onClick={() => openSpotlight()}></Button>
-    )
+function OperatorSearchResult({ data }: { data: Operator }) {
+
+	return (
+		<div style={{display: "flex", alignItems: "center"}}>
+			<Avatar src={data.logoUrl} radius={50} style={{marginRight: "10px"}}>{data.name}</Avatar>
+			<div>
+				<Text><b>{data.name}</b></Text>
+				<Text style={{marginTop: "-5px"}}>Operator</Text>
+			</div>
+		</div>
+	);
 }

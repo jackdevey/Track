@@ -3,6 +3,7 @@
 
 generator client {
     provider = "prisma-client-js"
+    previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -59,6 +60,10 @@ model Operator {
     franchise     String
     // operator sets
     operatorSets   OperatorSet[]
+    
+    @@fulltext([name])
+    @@fulltext([shortName])
+    @@fulltext([code])
 }
 
 // Sighting table
