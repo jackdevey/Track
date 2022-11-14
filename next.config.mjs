@@ -21,8 +21,5 @@ export default defineNextConfig({
   eslint: {
     ignoreDuringBuilds: true,
     ignoreBuildErrors: true,
-  },
-  experimental: {
-    appDir: true
   }
 });
