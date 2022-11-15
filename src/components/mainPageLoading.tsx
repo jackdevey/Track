@@ -10,7 +10,7 @@ export function MainPageLoading({user}: {user:User}) {
     return <>
         <HeaderMiddle user={user}/>
         <Box className={classes.header}>
-            <Container>
+            <Container size="xl">
                 <div className={classes.headerText}>
                     <Skeleton height={40} width="30%" />
                     <Skeleton height={20} mt={6} width="10%" />
@@ -27,7 +27,7 @@ export function SubPageLoading({user}: {user:User}) {
     return <>
         <HeaderMiddle user={user}/>
         <Box className={classes.header}>
-            <Container>
+            <Container size="xl">
                 <div className={classes.headerText}>
                     <Skeleton height={40} width="30%" />
                 </div>

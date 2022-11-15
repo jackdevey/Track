@@ -19,7 +19,7 @@ import showErrorPopup from "../../../components/errorPopup";
 import InlineTicketsCount from "../../../components/tickets/inlineTicketsCount";
 import SightingBlock from "../../../components/sightingCard";
 
-export default function RS({ user }: { user: User}) {
+export default function RS({ user }: { user: User }) {
 
     // Get identifier from router
     const router = useRouter();

@@ -26,7 +26,7 @@ export default function SightingBlock({ sighting, hasChips = true }: SightingBlo
             <Text>{sighting.date.toDateString()}</Text>
             {hasChips && <Chip.Group spacing="sm" mt={5}>{stockList}</Chip.Group>}
         </div>
-        <Anchor onClick={() => router.push("/rs/350101")}>View</Anchor>
+        <Anchor onClick={() => router.push("/sighting/" + sighting.id)}>View</Anchor>
     </div>
 }
 

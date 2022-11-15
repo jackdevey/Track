@@ -14,3 +14,13 @@ type SightingForList = Sighting & {
 type RStockSightingWithRstock = RstockSighting & {
     rstock: RStock;
 }
+
+type SightingFull = Sighting & {
+    rStockSightings: (RstockSighting & {
+        rstock: RStock & {
+            opSet: OperatorSet & {
+                operator: Operator;
+            };
+        };
+    })[];
+}

@@ -3,12 +3,26 @@ import { z } from "zod";
 import { getAll } from "./getAll";
 import { Errors } from "../errors";
 import { create } from "./create";
+import get from "./get";
 
 /**
  * Router for sightings
  */
 
 export const router = createRouter()
+    // si.get
+    .query("get", {
+        input: z
+            .object({
+                id: z.string(),
+            }),
+        async resolve({ ctx, input }) {
+            // If user logged in
+            if (ctx.session?.user) return await get(ctx, input.id)
+            // Else throw error
+            throw Errors.throw401();
+        },
+    })
     // si.getAll
     .query("getAll", {
         input: z
