@@ -175,34 +175,32 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@floating-ui/core@^0.7.3":
-  version "0.7.3"
-  resolved "https://registry.npmjs.org/@floating-ui/core/-/core-0.7.3.tgz"
-  integrity sha512-buc8BXHmG9l82+OQXOFU3Kr2XQx9ys01U/Q9HMIrZ300iLc8HLMgh7dcCqgYzAzf4BkoQvDcXf5Y+CuEZ5JBYg==
+"@floating-ui/core@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.0.2.tgz#d06a66d3ad8214186eda2432ac8b8d81868a571f"
+  integrity sha512-Skfy0YS3NJ5nV9us0uuPN0HDk1Q4edljaOhRBJGDWs9EBa7ZVMYBHRFlhLvvmwEoaIM9BlH6QJFn9/uZg0bACg==
 
-"@floating-ui/dom@^0.5.3":
-  version "0.5.4"
-  resolved "https://registry.npmjs.org/@floating-ui/dom/-/dom-0.5.4.tgz"
-  integrity sha512-419BMceRLq0RrmTSDxn8hf9R3VCJv2K9PUfugh5JyEFmdjzDo+e8U5EdR8nzKq8Yj1htzLm3b6eQEEam3/rrtg==
+"@floating-ui/dom@^1.0.5":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.0.7.tgz#9e8e6615ce03e5ebc6a4ae879640a199a366f86d"
+  integrity sha512-6RsqvCYe0AYWtsGvuWqCm7mZytnXAZCjWtsWu1Kg8dI3INvj/DbKlDsZO+mKSaQdPT12uxIW9W2dAWJkPx4Y5g==
   dependencies:
-    "@floating-ui/core" "^0.7.3"
+    "@floating-ui/core" "^1.0.2"
 
-"@floating-ui/react-dom-interactions@0.6.6":
-  version "0.6.6"
-  resolved "https://registry.npmjs.org/@floating-ui/react-dom-interactions/-/react-dom-interactions-0.6.6.tgz"
-  integrity sha512-qnao6UPjSZNHnXrF+u4/n92qVroQkx0Umlhy3Avk1oIebm/5ee6yvDm4xbHob0OjY7ya8WmUnV3rQlPwX3Atwg==
+"@floating-ui/react-dom-interactions@^0.10.1":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom-interactions/-/react-dom-interactions-0.10.3.tgz#1d988aad169bf752b54c688db942f12e4fed61c5"
+  integrity sha512-UEHqdnzyoiWNU5az/tAljr9iXFzN18DcvpMqW+/cXz4FEhDEB1ogLtWldOWCujLerPBnSRocADALafelOReMpw==
   dependencies:
-    "@floating-ui/react-dom" "^0.7.2"
+    "@floating-ui/react-dom" "^1.0.0"
     aria-hidden "^1.1.3"
-    use-isomorphic-layout-effect "^1.1.1"
 
-"@floating-ui/react-dom@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.npmjs.org/@floating-ui/react-dom/-/react-dom-0.7.2.tgz"
-  integrity sha512-1T0sJcpHgX/u4I1OzIEhlcrvkUN8ln39nz7fMoE/2HDHrPiMFoOGR7++GYyfUmIQHkkrTinaeQsO3XWubjSvGg==
+"@floating-ui/react-dom@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom/-/react-dom-1.0.1.tgz#ee3524eab740b9380a00f4c2629a758093414325"
+  integrity sha512-UW0t1Gi8ikbDRr8cQPVcqIDMBwUEENe5V4wlHWdrJ5egFnRQFBV9JirauTBFI6S8sM1qFUC1i+qa3g87E6CLTw==
   dependencies:
-    "@floating-ui/dom" "^0.5.3"
-    use-isomorphic-layout-effect "^1.1.1"
+    "@floating-ui/dom" "^1.0.5"
 
 "@humanwhocodes/config-array@^0.10.4":
   version "0.10.4"
@@ -223,14 +221,14 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@mantine/core@^5.2.4":
-  version "5.2.4"
-  resolved "https://registry.npmjs.org/@mantine/core/-/core-5.2.4.tgz"
-  integrity sha512-SSiu6G2ER428H7DPxG2FSyBbFLE4g1/U8vpe+qBnlLPgHn/YpBx/tzLjeOFUAfZ5abjZVBVwuOUPXcJ2h2Ewtg==
+"@mantine/core@^5.8.4":
+  version "5.8.4"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.8.4.tgz#305209f7452cca0274499abab8e225495255bcb0"
+  integrity sha512-TZ6hhrkk7GPq74mHTJuoZvI3UgDwUr0MbJChGfL9F/PGfXjHlg0C9ZQEiVUCeUpCNkract3peiuQglwMOD3Fzg==
   dependencies:
-    "@floating-ui/react-dom-interactions" "0.6.6"
-    "@mantine/styles" "5.2.4"
-    "@mantine/utils" "5.2.4"
+    "@floating-ui/react-dom-interactions" "^0.10.1"
+    "@mantine/styles" "5.8.4"
+    "@mantine/utils" "5.8.4"
     "@radix-ui/react-scroll-area" "1.0.0"
     react-textarea-autosize "8.3.4"
 
@@ -283,10 +281,10 @@
   dependencies:
     "@mantine/utils" "5.2.4"
 
-"@mantine/styles@5.2.4":
-  version "5.2.4"
-  resolved "https://registry.npmjs.org/@mantine/styles/-/styles-5.2.4.tgz"
-  integrity sha512-fSKVdM9epq3Zpbi3/Xs4kvLSa5Cj1p7v022m8k8sPqOOz5oji213r3bHDhzhgW57kBN2MI/bepcCu375EiYyGA==
+"@mantine/styles@5.8.4":
+  version "5.8.4"
+  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-5.8.4.tgz#1f87be27de8aa87d97a88b52fd11184ca33842c9"
+  integrity sha512-LRFv/n8NkTrEIMbkmLwuuBD/6T+y4jjVxZZr8jwnvAK5AMFUTTbTEluMLeSig7jIJumbNip/ALboYOQf4x/giw==
   dependencies:
     clsx "1.1.1"
     csstype "3.0.9"
@@ -295,6 +293,11 @@
   version "5.2.4"
   resolved "https://registry.npmjs.org/@mantine/utils/-/utils-5.2.4.tgz"
   integrity sha512-U+3+OpGRb7GbmhLUZcWhGvZelaMJ42MW88bZXH3Cej5VpLRdx3UgLTP6EhbQBIFGTW7S53Xq7K7eCx2xdUFfhg==
+
+"@mantine/utils@5.8.4":
+  version "5.8.4"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.8.4.tgz#46d535abd6ba76662de23d9c15daa28a11312200"
+  integrity sha512-JR5eg406hkBPmYKBznDpisv54TZO7tNw1BAFDlgXsqGE6N8EZnxTEpuS+i9rFLsqqt0QGyvmQFIl6vfser0FNQ==
 
 "@next-auth/prisma-adapter@^1.0.4":
   version "1.0.4"
