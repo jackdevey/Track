@@ -21,7 +21,6 @@ export default function OP({ user }: { user: User}) {
         "op.get", { code: code as string }
     ]);
 
-    if (!data) return <MainPageLoading user={user}/>
 
     return (
         <>

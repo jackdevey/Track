@@ -1,4 +1,5 @@
 import { Anchor, Flex, Breadcrumbs, Card, Container, createStyles, Text, Title, Avatar, Code, Table, ActionIcon, Group } from "@mantine/core";
+import { router } from "@trpc/server";
 import { GetServerSideProps } from "next";
 import { User } from "next-auth";
 import Head from "next/head";
@@ -12,6 +13,7 @@ import { trpc } from "../../utils/trpc";
 
 export default function OP({ user }: { user: User}) {
 
+    const router = useRouter();
 
     return (
         <>
@@ -37,11 +39,11 @@ export default function OP({ user }: { user: User}) {
                         </thead>
                         <tbody>
                             <tr key={"1"}>
-                                <td><Anchor href={"/data/toc/"} color="dark">TOCs</Anchor></td>
+                                <td><Anchor onClick={() => router.push("/data/toc/")} color="dark">TOCs</Anchor></td>
                                 <td>Train operating companies</td>
                             </tr>
                             <tr key={"2"}>
-                                <td><Anchor href={"/data/class/"} color="dark">Classes</Anchor></td>
+                                <td><Anchor onClick={() => router.push("/data/toc/")} color="dark">Classes</Anchor></td>
                                 <td>Rolling stock classes</td>
                             </tr>
                         </tbody>

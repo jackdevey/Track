@@ -1,8 +1,11 @@
 import { ActionIcon, Anchor, Breadcrumbs, Flex, Text, Title } from "@mantine/core";
+import { useRouter } from "next/router";
 import { History, Plus, Refresh } from "tabler-icons-react";
 import styles from "./test.module.css";
 
 export default function DataTitle({ title, prevLinks, refetch, isFetching }: Props) {
+    const router = useRouter();
+
     return <>
         <Flex align="start" justify="space-between">
             <div>
@@ -16,7 +19,7 @@ export default function DataTitle({ title, prevLinks, refetch, isFetching }: Pro
                     <Breadcrumbs mt="xs">
                         <Anchor href="/">Track</Anchor>
                         {prevLinks.map((link: Link) => 
-                            <Anchor href={link.path}>{link.name}</Anchor>
+                            <Anchor onClick={() => router.push(link.path)}>{link.name}</Anchor>
                         )}
                         <Text>{title}</Text>
                     </Breadcrumbs>

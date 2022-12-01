@@ -17,9 +17,8 @@ export default function OP({ user }: { user: User}) {
         "op.getMany"
     ]);
 
-    const { classes } = useStyles();
+    const router  = useRouter();
 
-    if (!data) return <MainPageLoading user={user}/>
 
     return (
         <>
@@ -48,7 +47,7 @@ export default function OP({ user }: { user: User}) {
                         <tbody>
                             {data.map((operator) => <tr key={operator.id}>
                                 <td>
-                                    <Anchor href={"./toc/"+operator.code} color="dark">
+                                    <Anchor onClick={() => router.push("./toc/"+operator.code)} color="dark">
                                         <Flex
                                             gap="sm"
                                             align="center">
