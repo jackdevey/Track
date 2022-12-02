@@ -3,12 +3,12 @@ import { GetServerSideProps } from "next";
 import { User } from "next-auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Flag, History, Plus, Refresh } from "tabler-icons-react";
-import { AuthGuardUI } from "../../../components/authGuard";
-import DataTitle from "../../../components/dataTitle";
-import { HeaderMiddle } from "../../../components/headerMiddle";
-import { MainPageLoading } from "../../../components/mainPageLoading";
-import { trpc } from "../../../utils/trpc";
+import { Flag } from "tabler-icons-react";
+import { AuthGuardUI } from "../../components/authGuard";
+import DataTitle from "../../components/dataTitle";
+import { HeaderMiddle } from "../../components/headerMiddle";
+import { MainPageLoading } from "../../components/mainPageLoading";
+import { trpc } from "../../utils/trpc";
 
 export default function OP({ user }: { user: User}) {
 
@@ -19,6 +19,7 @@ export default function OP({ user }: { user: User}) {
 
     const router  = useRouter();
 
+    if (!data) return <MainPageLoading user={user}/>
 
     return (
         <>
@@ -29,7 +30,7 @@ export default function OP({ user }: { user: User}) {
                 <DataTitle
                     title={"TOCs"}
                     refetch={() => refetch()}
-                    prevLinks={[{ name: "Data", path: "/data" }]}
+                    prevLinks={[]}
                     isFetching={isFetching}/>
 
                 <Card withBorder p={0} mt="lg">
@@ -41,7 +42,7 @@ export default function OP({ user }: { user: User}) {
                                 <th>Code</th>
                                 <th>Franchise</th>
                                 <th>Website</th>
-                                <th>Actions</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,14 +62,9 @@ export default function OP({ user }: { user: User}) {
                                 <td>{operator.franchise || "-"}</td>
                                 <td>{<Anchor href={"https://" + operator.website}>{operator.website}</Anchor> || "-"}</td>
                                 <td>
-                                    <Group spacing="xs">
-                                        <ActionIcon>
-                                            <Flag size={18} />
-                                        </ActionIcon>
-                                        <ActionIcon>
-                                            <Flag size={18} />
-                                        </ActionIcon>
-                                    </Group>
+                                    <ActionIcon>
+                                        <Flag size={18} />
+                                    </ActionIcon>
                                 </td>
                             </tr>)}
                         </tbody>
@@ -78,35 +74,6 @@ export default function OP({ user }: { user: User}) {
         </>
     )
 }
-
-const useStyles = createStyles((theme) => ({
-    header: {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark![6] : theme.colors.gray![0],
-        borderBottom: `1px solid ${
-            theme.colorScheme === 'dark' ? theme.colors.dark![5] : theme.colors.gray![2]
-        }`,
-    },
-
-    card: {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      },
-    
-      avatar: {
-        border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
-      },
-
-    titleRow: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: "10px",
-        paddingTop: "20px",
-    
-        [theme.fn.smallerThan('sm')]: {
-          justifyContent: 'flex-start',
-        },
-      },
-      
-}));
 
 // Use authGuard for UI
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {

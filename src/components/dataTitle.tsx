@@ -1,9 +1,9 @@
-import { ActionIcon, Anchor, Breadcrumbs, Flex, Text, Title } from "@mantine/core";
+import { ActionIcon, Anchor, Breadcrumbs, Flex, Skeleton, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { History, Plus, Refresh } from "tabler-icons-react";
 import styles from "./test.module.css";
 
-export default function DataTitle({ title, prevLinks, refetch, isFetching }: Props) {
+export default function DataTitle({ title, prevLinks, refetch, isFetching, isLoading }: Props) {
     const router = useRouter();
 
     return <>
