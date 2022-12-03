@@ -29,7 +29,7 @@ export default function OP({ user }: { user: User}) {
                     isFetching={false}
                     type={Type.LIST}/>
 
-                <Card withBorder p={0} mt="lg">
+                <Card withBorder p={0}>
                     <Table striped highlightOnHover>
                         <thead>
                             <tr>
@@ -44,8 +44,12 @@ export default function OP({ user }: { user: User}) {
                                 <td>Train operating companies</td>
                             </tr>
                             <tr key={"2"}>
-                                <td><Anchor onClick={() => router.push("/data/toc/")} color="dark">Classes</Anchor></td>
+                                <td><Anchor onClick={() => router.push("/data/class/")} color="dark">Classes</Anchor></td>
                                 <td>Rolling stock classes</td>
+                            </tr>
+                            <tr key={"3"}>
+                                <td><Anchor onClick={() => router.push("/data/manufacturer/")} color="dark">Manufacturers</Anchor></td>
+                                <td>Rolling stock manufacturers</td>
                             </tr>
                         </tbody>
                     </Table>

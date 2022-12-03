@@ -1,4 +1,5 @@
 import { Anchor, Flex, Breadcrumbs, Card, Container, createStyles, Text, Title, Avatar, Code, Table, ActionIcon, Group } from "@mantine/core";
+import { Manufacturer } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { User } from "next-auth";
 import Head from "next/head";
@@ -10,11 +11,10 @@ import { HeaderMiddle } from "../../../components/headerMiddle";
 import { MainPageLoading } from "../../../components/mainPageLoading";
 import { trpc } from "../../../utils/trpc";
 
-export default function OP({ user }: { user: User}) {
-
+export default function DataClassIndex({ user }: { user: User}) {
 
     const { data, isLoading, refetch, isFetching } = trpc.useQuery([
-        "op.getMany"
+        "cs.getMany"
     ]);
 
     const router  = useRouter();
@@ -23,12 +23,12 @@ export default function OP({ user }: { user: User}) {
 
     return (
         <>
-            <Head><title>TOCs</title></Head>
+            <Head><title>Classes</title></Head>
             <HeaderMiddle user={user}/>
           
             <Container my={20} size={"lg"}>
                 <DataTitle
-                    title={"TOCs"}
+                    title={"Classes"}
                     refetch={() => refetch()}
                     prevLinks={[{ name: "Data", path: "/data" }]}
                     isFetching={isFetching}
@@ -36,32 +36,30 @@ export default function OP({ user }: { user: User}) {
 
                 <Card withBorder p={0}>
                     <Table striped highlightOnHover>
-                        <thead>
+                    <thead>
                             <tr>
-                                <th>Operator</th>
-                                <th>Short name</th>
-                                <th>Code</th>
-                                <th>Franchise</th>
-                                <th>Website</th>
+                                <th>Number</th>
+                                <th>Type</th>
+                                <th>Model</th>
+                                <th>Manufacturer</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((operator) => <tr key={operator.id}>
-                                <td>
-                                    <Anchor onClick={() => router.push("./toc/"+operator.code)} color="dark">
-                                        <Flex
-                                            gap="sm"
-                                            align="center">
-                                            <Avatar src={"https://logo.clearbit.com/" + operator.website} size="sm"/>
-                                            {operator.name}
-                                        </Flex>
-                                    </Anchor>
-                                </td>
-                                <td>{operator.shortName || "-"}</td>
-                                <td><Code>{operator.code}</Code></td>
-                                <td>{operator.franchise || "-"}</td>
-                                <td>{<Anchor href={"https://" + operator.website}>{operator.website}</Anchor> || "-"}</td>
+                            {data.map((classs: ClassWithManufacturer) => <tr key={classs.id}>
+                                <td><Anchor onClick={() => router.push("/data/class/"+classs.id)} color="dark">
+                                    Class {classs.no}
+                                </Anchor></td>
+                                <td>{classs.type}</td>
+                                <td>{classs.model}</td>
+                                <td><Anchor onClick={() => router.push("/data/manufacturer/"+classs.manufacturer.id)} color="dark">
+                                    <Flex
+                                        gap="sm"
+                                        align="center">
+                                        <Avatar src={"https://logo.clearbit.com/" + classs.manufacturer.website} size="sm"/>
+                                        {classs.manufacturer.name}
+                                    </Flex>
+                                </Anchor></td>
                                 <td>
                                     <ActionIcon style={{float: "right"}}>
                                         <Flag size={18} />

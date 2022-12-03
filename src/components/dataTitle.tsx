@@ -18,7 +18,7 @@ export default function DataTitle({ title, prevLinks, refetch, isFetching, type 
             <Text color="dimmed" mb="0">Last updated</Text>
             <Title>2 days ago</Title>
         </Modal>
-        <Flex align="start" justify="space-between">
+        <Flex align="start" justify="space-between" mb={"lg"}>
             <div>
                 <Flex gap="xs" align="end">
                     <Title>{title}</Title>

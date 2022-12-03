@@ -10,3 +10,7 @@ type ClassWithOperatorsAndManufacturer = Class & {
     })[];
     manufacturer: Manufacturer;
 }
+
+type ClassWithManufacturer = Class & {
+    manufacturer: Manufacturer;
+}
