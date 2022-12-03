@@ -4,11 +4,11 @@ import { User } from "next-auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Flag, History, Plus, Refresh } from "tabler-icons-react";
-import { AuthGuardUI } from "../../components/authGuard";
-import DataTitle from "../../components/dataTitle";
-import { HeaderMiddle } from "../../components/headerMiddle";
-import { MainPageLoading } from "../../components/mainPageLoading";
-import { trpc } from "../../utils/trpc";
+import { AuthGuardUI } from "../../../components/authGuard";
+import DataTitle, { Type } from "../../../components/dataTitle";
+import { HeaderMiddle } from "../../../components/headerMiddle";
+import { MainPageLoading } from "../../../components/mainPageLoading";
+import { trpc } from "../../../utils/trpc";
 import styles from "./test.module.css";
 
 export default function OP({ user }: { user: User}) {
@@ -34,9 +34,11 @@ export default function OP({ user }: { user: User}) {
                     title={data.name}
                     refetch={() => refetch()}
                     prevLinks={[
-                        { name: "TOCs", path: "/toc" }
+                        { name: "Data", path: "/data" },
+                        { name: "TOCs", path: "/data/toc" }
                     ]}
-                    isFetching={isFetching}/>
+                    isFetching={isFetching}
+                    type={Type.SINGULAR}/>
                 
             </Container>
         </>

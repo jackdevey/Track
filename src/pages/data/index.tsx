@@ -6,7 +6,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Flag, History, Plus, Refresh } from "tabler-icons-react";
 import { AuthGuardUI } from "../../components/authGuard";
-import DataTitle from "../../components/dataTitle";
+import DataTitle, { Type } from "../../components/dataTitle";
 import { HeaderMiddle } from "../../components/headerMiddle";
 import { MainPageLoading } from "../../components/mainPageLoading";
 import { trpc } from "../../utils/trpc";
@@ -26,7 +26,8 @@ export default function OP({ user }: { user: User}) {
                     title={"Data"}
                     refetch={() => null}
                     prevLinks={[]}
-                    isFetching={false}/>
+                    isFetching={false}
+                    type={Type.LIST}/>
 
                 <Card withBorder p={0} mt="lg">
                     <Table striped highlightOnHover>

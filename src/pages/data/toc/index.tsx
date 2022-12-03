@@ -4,11 +4,11 @@ import { User } from "next-auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Flag } from "tabler-icons-react";
-import { AuthGuardUI } from "../../components/authGuard";
-import DataTitle from "../../components/dataTitle";
-import { HeaderMiddle } from "../../components/headerMiddle";
-import { MainPageLoading } from "../../components/mainPageLoading";
-import { trpc } from "../../utils/trpc";
+import { AuthGuardUI } from "../../../components/authGuard";
+import DataTitle, { Type } from "../../../components/dataTitle";
+import { HeaderMiddle } from "../../../components/headerMiddle";
+import { MainPageLoading } from "../../../components/mainPageLoading";
+import { trpc } from "../../../utils/trpc";
 
 export default function OP({ user }: { user: User}) {
 
@@ -30,8 +30,9 @@ export default function OP({ user }: { user: User}) {
                 <DataTitle
                     title={"TOCs"}
                     refetch={() => refetch()}
-                    prevLinks={[]}
-                    isFetching={isFetching}/>
+                    prevLinks={[{ name: "Data", path: "/data" }]}
+                    isFetching={isFetching}
+                    type={Type.LIST}/>
 
                 <Card withBorder p={0} mt="lg">
                     <Table striped highlightOnHover>
