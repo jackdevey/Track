@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createStyles, Header, Group, ActionIcon, Container, Burger, Title, Text, Button, Input, TextInput, Menu, UnstyledButton, Avatar } from '@mantine/core';
+import { Box, createStyles, Header, Group, Code, ActionIcon, Container, Burger, Title, Text, Button, Input, TextInput, Menu, UnstyledButton, Avatar, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
 import { Book2, ChevronDown, Logout, Search, Settings, User as UserIcon } from 'tabler-icons-react';
@@ -98,9 +98,11 @@ export function HeaderMiddle({ user }: {user: User|null}) {
 
   return (
     <Header height={56}>
-        <Container className={classes.inner} size="xl">
+        <Box className={classes.inner} px={"md"}>
             <Link href="/">
-              <Title order={2} align="center" style={{cursor: "pointer"}}>🚅 Track</Title>
+              <div>
+                <Title order={2} align="center" style={{cursor: "pointer"}}>🚅 Track</Title> 
+              </div>
             </Link>
 
             {/* <TextInput
@@ -136,7 +138,7 @@ export function HeaderMiddle({ user }: {user: User|null}) {
 
             </Menu.Dropdown>
           </Menu>
-        </Container>
+        </Box>
     </Header>
   );
 }

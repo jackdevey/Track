@@ -7,6 +7,7 @@ import { Flag, History, Plus, Refresh } from "tabler-icons-react";
 import { AuthGuardUI } from "../../../components/authGuard";
 import DataTitle, { Type } from "../../../components/dataTitle";
 import { HeaderMiddle } from "../../../components/headerMiddle";
+import MainLayout from "../../../components/MainLayout";
 import { MainPageLoading } from "../../../components/mainPageLoading";
 import { trpc } from "../../../utils/trpc";
 import styles from "./test.module.css";
@@ -21,28 +22,21 @@ export default function DataClassSpecific({ user }: { user: User}) {
         "cs.get", { classNo: number as string }
     ]);
 
-    if (!data) return <MainPageLoading user={user}/>
+    if (!data) return <MainPageLoading user={user} title={"Loading..."}/>
 
     return (
         <>
             <Head><title>Class {data.no}</title></Head>
-            <HeaderMiddle user={user}/>
-          
-            <Container my={20} size={"lg"}>
-
+            <MainLayout user={user}>
                 <DataTitle
-                    title={"Class " + data.no}
+                    title={`Class ${data.no}`}
                     refetch={() => refetch()}
                     prevLinks={[
-                        { name: "Data", path: "/data" },
                         { name: "Classes", path: "/data/class" }
                     ]}
                     isFetching={isFetching}
                     type={Type.SINGULAR}/>
-
-                <a>d</a>
-                
-            </Container>
+            </MainLayout>
         </>
     )
 }

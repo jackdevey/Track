@@ -1,39 +1,48 @@
 import { HeaderMiddle } from "./headerMiddle";
-import { Box, Container, Skeleton, createStyles, Flex, Title, ActionIcon, Breadcrumbs, Anchor, Text } from "@mantine/core";
+import { Box, Container, Skeleton, createStyles, Flex, Title, ActionIcon, Breadcrumbs, Anchor, Text, Card, Table, AppShell } from "@mantine/core";
 import { User } from "next-auth";
 import { History, Plus, Refresh } from "tabler-icons-react";
+import { NavbarNested } from "./NavbarNested";
+import Head from "next/head";
 
 
-export function MainPageLoading({user}: {user:User}) {
+export function MainPageLoading({user, title}: {user:User, title:string}) {
 
     return <>
-        <HeaderMiddle user={user}/>
-        <Container my={20} size={"lg"}>
+            <Head><title>{title}</title></Head>
 
-        <Flex align="start" justify="space-between">
-            <div>
-                <Flex gap="xs" align="end">
-                    <Skeleton visible={true}><Title>Bla bla bla bla</Title></Skeleton>
+            <AppShell
+                navbar={<NavbarNested/>}
+                header={<HeaderMiddle user={user}/>}
+                styles={(theme) => ({
+                    main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
+                })}
+                >  
+                <Box px={"md"}>
+                    <Flex align="start" justify="space-between">
+                        <div>
+                            <Flex gap="xs" align="end">
+                                <Skeleton visible={true}><Title>Bla bla bla bla</Title></Skeleton>
+                            </Flex>
+                            <Breadcrumbs mt="xs">
+                                <Skeleton visible={true}><Text>Some links here</Text></Skeleton>
+                            </Breadcrumbs>
+                        </div>
+                        <div>
+                            <Skeleton visible={true}>
+                                <Flex gap="xs">
+                                    <ActionIcon size="lg">
+                                        <Plus size={20} />
+                                    </ActionIcon>
+                                    <ActionIcon size="lg">
+                                        <History size={20} />
+                                    </ActionIcon>
+                                </Flex>
+                            </Skeleton>
+                        </div>
                     </Flex>
-                    <Breadcrumbs mt="xs">
-                        <Skeleton visible={true}><Text>Some links here</Text></Skeleton>
-                    </Breadcrumbs>
-                </div>
-                <div>
-                    <Skeleton visible={true}>
-                        <Flex gap="xs">
-                            <ActionIcon size="lg">
-                                <Plus size={20} />
-                            </ActionIcon>
-                            <ActionIcon size="lg">
-                                <History size={20} />
-                            </ActionIcon>
-                        </Flex>
-                    </Skeleton>
-                </div>
-            </Flex>
-                
-            </Container>
+                </Box>
+            </AppShell>
     </>
 }
 

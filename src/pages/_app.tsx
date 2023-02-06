@@ -9,6 +9,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import { FooterLinks } from "../components/footer";
+import { NavbarNested } from "../components/NavbarNested";
 import { RouterTransition } from "../components/routerTransition";
 import type { Router } from "../server/router";
 import "../styles/globals.css";
