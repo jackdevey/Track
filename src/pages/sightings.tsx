@@ -2,6 +2,7 @@ import {
   Anchor,
   Box,
   Card,
+  Chip,
   Code,
   Container,
   createStyles,
@@ -9,6 +10,7 @@ import {
   Grid,
   SimpleGrid,
   Skeleton,
+  Table,
   Text,
   ThemeIcon,
   Title,
@@ -39,33 +41,52 @@ export default function Home({ user }: { user: User }) {
 
   return (
     <MainLayout user={user}>
-      <Box className={classes.header}>
-        <Container>
-          <div className={classes.headerText}>
-            <Title>Your Sightings</Title>
-          </div>
-        </Container>
-      </Box>
+      <Title order={1} mb={"lg"}>
+        Sightings
+      </Title>
 
-      <Container my={20}>
-        <Grid columns={12}>
-          <Grid.Col span={8}>
-            <Card withBorder shadow="sm">
-              {data.map((sighting: SightingForList, i: number) => (
-                <>
-                  <SightingBlock sighting={sighting} hasChips={true} />
-                  {i != data.length - 1 && <Divider my={10} />}
-                </>
-              ))}
-            </Card>
-          </Grid.Col>
-          <Grid.Col span={4}>
-            <Card withBorder shadow="sm">
-              <Title order={4}>Your stats</Title>
-            </Card>
-          </Grid.Col>
-        </Grid>
-      </Container>
+      <Card p={0} withBorder>
+        <Table striped highlightOnHover>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Locations</th>
+              <th>Rolling Stock</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((sighting: SightingForList) => (
+              <tr>
+                <td>{sighting.date.toDateString()}</td>
+                <td>{sighting.location}</td>
+                <td>
+                  <Chip.Group spacing="sm">
+                    {sighting.rStockSightings.map(
+                      (rs: RStockSightingWithRstock, i: number) => (
+                        <>
+                          <Chip
+                            radius="sm"
+                            p={0}
+                            style={{ cursor: "pointer" }}
+                            checked={rs.userFirst}
+                            onClick={() =>
+                              router.push("/rs/" + rs.rstock.identifier)
+                            }
+                          >
+                            {rs.rstock.identifier}
+                          </Chip>
+                        </>
+                      )
+                    )}
+                  </Chip.Group>
+                </td>
+                <td>View</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Card>
     </MainLayout>
   );
 }
